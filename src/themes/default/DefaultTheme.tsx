@@ -4,6 +4,7 @@ import {
   GitHubIcon,
   LinkedInIcon,
   MailIcon,
+  WebringIcon,
 } from '../../components/icons'
 import type { Profile } from '../../data'
 import { ThemeMenu } from '../../shell/ThemeMenu'
@@ -125,7 +126,7 @@ function Hero({ profile }: { profile: Profile }) {
 function Footer({ profile }: { profile: Profile }) {
   return (
     <footer id="contact" className="scroll-mt-16 border-t border-line">
-      <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-5xl px-4 pt-20 pb-8 sm:px-6 sm:pt-28 sm:pb-10">
         <p className="font-mono text-xs tracking-[0.18em] text-muted uppercase">Contact</p>
         <h2 className="mt-4 text-4xl font-semibold tracking-tighter sm:text-6xl">
           Let’s build something<span className="text-accent">.</span>
@@ -165,6 +166,34 @@ function Footer({ profile }: { profile: Profile }) {
             className="inline-flex items-center gap-1.5 transition-colors hover:text-accent"
           />
         </div>
+        {/* UTD CS Webring widget: https://github.com/ryanpolasky/utdring */}
+        <nav
+          aria-label="UTD CS Webring"
+          className="mt-12 flex items-center justify-center gap-3 text-muted"
+        >
+          <a
+            href="https://ecs.utdring.com/#allenzheng.com?nav=prev"
+            aria-label="Previous site in the UTD CS Webring"
+            className="rounded-md p-1 transition-colors hover:text-accent"
+          >
+            ←
+          </a>
+          <a
+            href="https://ecs.utdring.com/#allenzheng.com"
+            aria-label="UTD CS Webring"
+            title="UTD CS Webring"
+            className="rounded-md p-1 transition-colors hover:text-accent"
+          >
+            <WebringIcon className="h-6 w-auto" />
+          </a>
+          <a
+            href="https://ecs.utdring.com/#allenzheng.com?nav=next"
+            aria-label="Next site in the UTD CS Webring"
+            className="rounded-md p-1 transition-colors hover:text-accent"
+          >
+            →
+          </a>
+        </nav>
       </div>
     </footer>
   )
