@@ -1,0 +1,36 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+:root[data-theme='default'] {
+  --theme-bg: #fbfaf8;
+  --theme-surface: #ffffff;
+  --theme-fg: #18181b;
+  --theme-muted: #64646c;
+  --theme-line: #e7e5e1;
+  --theme-accent: #d7340f;
+  --theme-font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --theme-font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  color-scheme: light;
+  background: var(--theme-bg);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='default'] {
+    --theme-bg: #0e0e10;
+    --theme-surface: #151518;
+    --theme-fg: #ededee;
+    --theme-muted: #9d9da6;
+    --theme-line: #26262b;
+    --theme-accent: #ff6a47;
+
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme='default'] {
+    scroll-behavior: auto;
+  }
+}
