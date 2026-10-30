@@ -34,7 +34,7 @@ export const themes: ThemeDefinition[] = [
   {
     id: 'default',
     name: 'Default',
-    description: 'Simple and minimal design',
+    description: 'My homepage, 2007 edition',
     status: 'available',
     Preview: DefaultPreview,
     Component: lazy(() => import('../themes/default')),

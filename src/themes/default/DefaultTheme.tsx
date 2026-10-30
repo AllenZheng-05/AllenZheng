@@ -1,200 +1,215 @@
-import {
-  ArrowUpRightIcon,
-  DownloadIcon,
-  GitHubIcon,
-  LinkedInIcon,
-  MailIcon,
-  WebringIcon,
-} from '../../components/icons'
-import type { Profile } from '../../data'
+// The "before" for the Fitts demo: my homepage as I'd have built it in 2007. It shows every
+// piece of portfolio content (the theme contract), but on purpose it gets almost everything
+// else wrong: faint and clashing colors, five fonts, tiny unlabeled links, a fixed 980px
+// layout, no focus styles, a leftover template placeholder, three names for one resume and a
+// button that does nothing. Fitts is supposed to find all of it.
+import { GitHubIcon, LinkedInIcon, MailIcon, WebringIcon } from '../../components/icons'
+import type { Experience, Links, Project } from '../../data'
+import { formatPeriod } from '../../lib/dates'
 import { ThemeMenu } from '../../shell/ThemeMenu'
 import type { ThemeProps } from '../../shell/themes'
 import './default.css'
-import { About, ExperienceSection, Projects } from './sections'
-import { ExternalLink } from './ui'
 
-const NAV = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
-]
-
-const iconButton =
-  'inline-flex size-10 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-fg/30 hover:text-fg'
+const LINK_NAMES: Record<keyof Links, string> = {
+  live: 'site',
+  source: 'code',
+  demo: 'devpost',
+  video: 'vid',
+  post: 'post',
+}
 
 export default function DefaultTheme({ data }: ThemeProps) {
   const { profile } = data
 
   return (
-    <div className="min-h-dvh bg-bg font-sans text-fg antialiased selection:bg-accent/20">
-      <a
-        href="#main"
-        className="sr-only z-50 rounded-md bg-fg px-3 py-2 text-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-      >
-        Skip to content
-      </a>
-      <Header profile={profile} />
-      <main id="main" className="mx-auto max-w-5xl px-4 sm:px-6">
-        <Hero profile={profile} />
-        <About profile={profile} />
-        <ExperienceSection experience={data.experience} />
-        <Projects projects={data.projects} />
-      </main>
-      <Footer profile={profile} />
-    </div>
-  )
-}
+    <div className="y2k">
+      <div className="y2k-page">
+        <div className="y2k-banner">
+          <span className="y2k-blink">NEW!!</span>
+          <div className="y2k-marquee">
+            <span>
+              ~*~ Welcome to {profile.name}&apos;s Homepage ~*~ Thanks 4 visiting!! ~*~ Sign my
+              guestbook!!! ~*~
+            </span>
+          </div>
+        </div>
 
-function Header({ profile }: { profile: Profile }) {
-  return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-4 sm:px-6">
-        <a href="#top" className="font-semibold tracking-tight">
-          {profile.name}
-          <span className="text-accent">.</span>
-        </a>
-        <nav aria-label="Sections" className="hidden md:block">
-          <ul className="flex gap-5 text-sm text-muted">
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className="transition-colors hover:text-fg">
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <a
-            href={profile.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-fg sm:inline-flex"
-          >
+        <div className="y2k-nav">
+          <a href="#top">Home</a> | <a href="#about">About Me</a> | <a href="#jobz">Jobz</a> |{' '}
+          <a href="#werk">My Werk</a> | <a href="#contact">Contact</a> |{' '}
+          <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
             Resume
-          </a>
-          <ThemeMenu className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-sm font-medium transition-colors hover:border-accent hover:text-accent" />
+          </a>{' '}
+          | <ThemeMenu label="skinz" className="y2k-skin" />
         </div>
-      </div>
-    </header>
-  )
-}
 
-function Hero({ profile }: { profile: Profile }) {
-  return (
-    <div id="top" className="scroll-mt-16 pt-16 pb-16 sm:pt-28 sm:pb-24">
-      <p className="font-mono text-xs tracking-wide text-muted">
-        {profile.headline} · {profile.location}
-      </p>
-      <h1 className="mt-4 text-5xl font-semibold tracking-tighter text-balance sm:text-7xl">
-        {profile.name}
-        <span className="text-accent">.</span>
-      </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-pretty text-muted sm:text-xl">
-        {profile.tagline}
-      </p>
+        <table className="y2k-layout" id="top">
+          <tbody>
+            <tr>
+              <td className="y2k-side">
+                <img
+                  src={profile.photo.src}
+                  alt={profile.photo.alt}
+                  className="y2k-photo"
+                  style={{ objectPosition: profile.photo.focus }}
+                />
+                <p className="y2k-mood">
+                  Mood: <b>coding</b> :-)
+                </p>
+                <p className="y2k-hello">Welcome to my page, {'{{visitor_name}}'}!</p>
+                <div className="y2k-box">
+                  <h3>Stuff about me</h3>
+                  {profile.facts.map((fact) => (
+                    <p key={fact.label}>
+                      <u>{fact.label}</u>: {fact.value}
+                    </p>
+                  ))}
+                  <p>
+                    <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+                      CV
+                    </a>
+                  </p>
+                </div>
+                <div className="y2k-icons">
+                  <a href={`mailto:${profile.email}`}>
+                    <MailIcon className="y2k-icon" />
+                  </a>
+                  <a href={profile.github} target="_blank" rel="noreferrer">
+                    <GitHubIcon className="y2k-icon" />
+                  </a>
+                  <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                    <LinkedInIcon className="y2k-icon" />
+                  </a>
+                </div>
+                <button type="button" className="y2k-guestbook">
+                  Sign my guestbook!
+                </button>
+                <p className="y2k-counter">
+                  You are visitor #<span>000427</span>
+                </p>
+              </td>
 
-      <div className="mt-8 flex flex-wrap items-center gap-2">
-        <a
-          href={profile.resumeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-fg px-4 text-sm font-medium text-bg transition-opacity hover:opacity-85"
-        >
-          <DownloadIcon className="size-4" />
-          Resume
-        </a>
-        <a
-          href={`mailto:${profile.email}`}
-          className="inline-flex h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm font-medium transition-colors hover:border-fg/30"
-        >
-          <MailIcon className="size-4" />
-          Email me
-        </a>
-        <ExternalLink href={profile.github} label="GitHub" className={iconButton}>
-          <GitHubIcon className="size-4.5" />
-        </ExternalLink>
-        <ExternalLink href={profile.linkedin} label="LinkedIn" className={iconButton}>
-          <LinkedInIcon className="size-4" />
-        </ExternalLink>
+              <td className="y2k-main">
+                <h1 className="y2k-name">{profile.name}</h1>
+                <h2 className="y2k-tagline">{profile.tagline}</h2>
+                <p className="y2k-sub">
+                  {profile.headline} -- {profile.location}
+                </p>
+
+                <div className="y2k-section" id="about">
+                  <h2 className="y2k-h">About Me</h2>
+                  {profile.bio.map((paragraph) => (
+                    <p key={paragraph} className="y2k-bio">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="y2k-section" id="jobz">
+                  <h2 className="y2k-h">Jobz</h2>
+                  {data.experience.map((job) => (
+                    <Job key={job.id} job={job} />
+                  ))}
+                </div>
+
+                <div className="y2k-section" id="werk">
+                  <h2 className="y2k-h">My Werk</h2>
+                  <table className="y2k-projects">
+                    <tbody>
+                      {data.projects.map((project) => (
+                        <ProjectRow key={project.id} project={project} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div className="y2k-footer" id="contact">
+          <p className="y2k-contact">
+            email me @ <a href={`mailto:${profile.email}`}>{profile.email}</a> or{' '}
+            <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+              Download my stuff
+            </a>
+          </p>
+          <p className="y2k-small">
+            best viewed in 1024x768 · (c) {new Date().getFullYear()} {profile.name} · made with
+            notepad
+          </p>
+          <p className="y2k-ring">
+            <a href="https://ecs.utdring.com/#allenzheng.com?nav=prev">&lt;&lt;</a>
+            <a href="https://ecs.utdring.com/#allenzheng.com" title="UTD CS Webring">
+              <WebringIcon className="y2k-ring-icon" />
+            </a>
+            <a href="https://ecs.utdring.com/#allenzheng.com?nav=next">&gt;&gt;</a>
+          </p>
+        </div>
       </div>
     </div>
   )
 }
 
-function Footer({ profile }: { profile: Profile }) {
+function LinkRow({ links }: { links: Links }) {
+  const entries = (Object.keys(LINK_NAMES) as (keyof Links)[]).flatMap((kind) => {
+    const href = links[kind]
+    return href ? [{ kind, href }] : []
+  })
+  if (entries.length === 0) return null
   return (
-    <footer id="contact" className="scroll-mt-16 border-t border-line">
-      <div className="mx-auto max-w-5xl px-4 pt-20 pb-8 sm:px-6 sm:pt-28 sm:pb-10">
-        <p className="font-mono text-xs tracking-[0.18em] text-muted uppercase">Contact</p>
-        <h2 className="mt-4 text-4xl font-semibold tracking-tighter sm:text-6xl">
-          Let’s build something<span className="text-accent">.</span>
-        </h2>
-        <p className="mt-4 max-w-xl text-muted">
-          I’m always open to talk about anything interesting.
-        </p>
-        <a
-          href={`mailto:${profile.email}`}
-          className="group mt-8 inline-flex items-center gap-2 text-lg font-medium break-all underline decoration-line underline-offset-8 transition-colors hover:decoration-accent sm:text-2xl"
-        >
-          {profile.email}
-          <ArrowUpRightIcon className="size-5 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+    <span className="y2k-links">
+      {entries.map(({ kind, href }) => (
+        <a key={kind} href={href} target="_blank" rel="noreferrer">
+          [{LINK_NAMES[kind]}]
         </a>
-        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
-          <ExternalLink href={profile.github} className="hover:text-fg">
-            GitHub
-          </ExternalLink>
-          <ExternalLink href={profile.linkedin} className="hover:text-fg">
-            LinkedIn
-          </ExternalLink>
-          <a
-            href={profile.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-fg"
-          >
-            Resume (PDF)
+      ))}
+    </span>
+  )
+}
+
+function Job({ job }: { job: Experience }) {
+  return (
+    <div className="y2k-job">
+      {job.logo && (
+        <img
+          src={job.logo.src}
+          alt={job.logo.alt}
+          className={job.logo.background === 'dark' ? 'y2k-logo y2k-logo-dark' : 'y2k-logo'}
+        />
+      )}
+      <p className="y2k-role">
+        <b>{job.role}</b> @{' '}
+        {job.orgUrl ? (
+          <a href={job.orgUrl} target="_blank" rel="noreferrer">
+            {job.org}
           </a>
-        </div>
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 text-xs text-muted">
-          <p>
-            © {new Date().getFullYear()} {profile.name}.
-          </p>
-          <ThemeMenu
-            label="Try another theme"
-            className="inline-flex items-center gap-1.5 transition-colors hover:text-accent"
-          />
-        </div>
-        {/* UTD CS Webring widget: https://github.com/ryanpolasky/utdring */}
-        <nav
-          aria-label="UTD CS Webring"
-          className="mt-12 flex items-center justify-center gap-3 text-muted"
-        >
-          <a
-            href="https://ecs.utdring.com/#allenzheng.com?nav=prev"
-            aria-label="Previous site in the UTD CS Webring"
-            className="rounded-md p-1 transition-colors hover:text-accent"
-          >
-            ←
-          </a>
-          <a
-            href="https://ecs.utdring.com/#allenzheng.com"
-            aria-label="UTD CS Webring"
-            title="UTD CS Webring"
-            className="rounded-md p-1 transition-colors hover:text-accent"
-          >
-            <WebringIcon className="h-6 w-auto" />
-          </a>
-          <a
-            href="https://ecs.utdring.com/#allenzheng.com?nav=next"
-            aria-label="Next site in the UTD CS Webring"
-            className="rounded-md p-1 transition-colors hover:text-accent"
-          >
-            →
-          </a>
-        </nav>
-      </div>
-    </footer>
+        ) : (
+          job.org
+        )}{' '}
+        <i>({formatPeriod(job.period)})</i>
+      </p>
+      <p className="y2k-desc">{job.description}</p>
+      <p className="y2k-tags">skillz: {job.skills.join(', ')}</p>
+      <LinkRow links={job.links} />
+    </div>
+  )
+}
+
+function ProjectRow({ project }: { project: Project }) {
+  return (
+    <tr>
+      <td className="y2k-ptitle">
+        {project.title}
+        {project.role && <div className="y2k-prole">{project.role}</div>}
+        <div className="y2k-pdate">{formatPeriod(project.period)}</div>
+      </td>
+      <td className="y2k-pdesc">
+        {project.award && <span className="y2k-award">*~{project.award}~*</span>}
+        <p>{project.description}</p>
+        <p className="y2k-tags">built w/ {project.stack.join(', ')}</p>
+        <LinkRow links={project.links} />
+      </td>
+    </tr>
   )
 }
