@@ -2,6 +2,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 import type { Portfolio } from '../data'
 import DefaultPreview from '../themes/default/Preview'
 import PokemonPreview from '../themes/pokemon/Preview'
+import RetroPreview from '../themes/retro/Preview'
 import VSCodePreview from '../themes/vscode/Preview'
 
 export interface ThemeProps {
@@ -33,11 +34,19 @@ export type ThemeDefinition = AvailableTheme | UpcomingTheme
 export const themes: ThemeDefinition[] = [
   {
     id: 'default',
-    name: 'Default',
-    description: 'My homepage, 2007 edition',
+    name: 'Quiet Confidence',
+    description: 'A clean, confident portfolio for recruiters.',
     status: 'available',
     Preview: DefaultPreview,
     Component: lazy(() => import('../themes/default')),
+  },
+  {
+    id: 'retro',
+    name: 'Retro',
+    description: 'My homepage, 2007 edition.',
+    status: 'available',
+    Preview: RetroPreview,
+    Component: lazy(() => import('../themes/retro')),
   },
   {
     id: 'pokemon',
