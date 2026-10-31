@@ -1,5 +1,5 @@
 /* Quiet Confidence: clean light layout for recruiters and judges. */
-:root[data-theme='default'] {
+:root[data-theme='quiet-confidence'] {
   --theme-bg: #f8fafc;
   --theme-surface: #ffffff;
   --theme-fg: #0f172a;

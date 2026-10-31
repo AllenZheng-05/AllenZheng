@@ -1,0 +1,33 @@
+/* Fonts for this site's design, served from the site itself. Licenses: Unbounded (OFL-1.1), Outfit (OFL-1.1). */
+
+@font-face {
+  font-family: "Unbounded";
+  src: url("/fitts/fonts/unbounded-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Unbounded";
+  src: url("/fitts/fonts/unbounded-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fitts/fonts/outfit-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fitts/fonts/outfit-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

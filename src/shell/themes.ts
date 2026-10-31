@@ -2,6 +2,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 import type { Portfolio } from '../data'
 import DefaultPreview from '../themes/default/Preview'
 import PokemonPreview from '../themes/pokemon/Preview'
+import SpritePreview from '../themes/sprite/Preview'
 import RetroPreview from '../themes/retro/Preview'
 import VSCodePreview from '../themes/vscode/Preview'
 
@@ -33,7 +34,18 @@ export type ThemeDefinition = AvailableTheme | UpcomingTheme
 // then register it here.
 export const themes: ThemeDefinition[] = [
   {
-    id: 'default',
+    id: 'sprite-studio',
+    name: 'Sprite Studio Drift',
+    description: 'Floating 3D interest sprites over a recruiter-clear portfolio.',
+    status: 'available',
+    Preview: SpritePreview,
+    Component: lazy(() => import('../themes/sprite')),
+  },
+  {
+    // Renamed from 'default' when Sprite Studio Drift became the default theme:
+    // '/default' must keep redirecting to '/' (the default theme's canonical home),
+    // so this theme now lives at its own '/quiet-confidence' path.
+    id: 'quiet-confidence',
     name: 'Quiet Confidence',
     description: 'A clean, confident portfolio for recruiters.',
     status: 'available',
@@ -64,7 +76,7 @@ export const themes: ThemeDefinition[] = [
   },
 ]
 
-export const DEFAULT_THEME_ID = 'default'
+export const DEFAULT_THEME_ID = 'sprite-studio'
 
 export const availableThemes = themes.filter(
   (theme): theme is AvailableTheme => theme.status === 'available',
