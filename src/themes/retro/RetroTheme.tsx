@@ -68,13 +68,13 @@ export default function RetroTheme({ data }: ThemeProps) {
                   </p>
                 </div>
                 <div className="y2k-icons">
-                  <a href={`mailto:${profile.email}`}>
+                  <a href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`}>
                     <MailIcon className="y2k-icon" />
                   </a>
-                  <a href={profile.github} target="_blank" rel="noreferrer">
+                  <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
                     <GitHubIcon className="y2k-icon" />
                   </a>
-                  <a href={profile.linkedin} target="_blank" rel="noreferrer">
+                  <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
                     <LinkedInIcon className="y2k-icon" />
                   </a>
                 </div>
@@ -137,7 +137,7 @@ export default function RetroTheme({ data }: ThemeProps) {
           </p>
           <p className="y2k-ring">
             <a href="https://ecs.utdring.com/#allenzheng.com?nav=prev">&lt;&lt;</a>
-            <a href="https://ecs.utdring.com/#allenzheng.com" title="UTD CS Webring">
+            <a href="https://ecs.utdring.com/#allenzheng.com" title="UTD CS Webring" aria-label="UTD CS Webring">
               <WebringIcon className="y2k-ring-icon" />
             </a>
             <a href="https://ecs.utdring.com/#allenzheng.com?nav=next">&gt;&gt;</a>
