@@ -35,6 +35,15 @@
   outline-offset: 2px;
 }
 
+.y2k a,
+.y2k button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
 .y2k-page {
   width: 980px;
   max-width: calc(100% - 14px);
