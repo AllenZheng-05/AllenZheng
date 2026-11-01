@@ -30,7 +30,7 @@
   color: #555555;
   font-family: 'Times New Roman', serif;
   font-size: 13px;
-  padding: 7px 0 40px;
+  padding: 8px 0 40px;
 }
 
 /* No focus styles anywhere: "the outline looked ugly". */
@@ -50,12 +50,12 @@
 .y2k-banner {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: #ffff00;
   color: #ff0000;
   font-family: Impact, 'Arial Black', sans-serif;
   font-size: 22px;
-  padding: 3px 9px;
+  padding: 4px 8px;
   overflow: hidden;
 }
 .y2k-blink {
@@ -87,7 +87,7 @@
   color: #ff99ff;
   font-family: Verdana, sans-serif;
   font-size: 10px;
-  padding: 2px 5px;
+  padding: 4px 4px;
 }
 .y2k a {
   color: #0000ee;
@@ -115,13 +115,13 @@
 .y2k-side {
   width: 210px;
   vertical-align: top;
-  padding: 9px;
+  padding: 8px;
   background: #1a001a;
   border-right: 3px dotted #00ff00;
 }
 .y2k-main {
   vertical-align: top;
-  padding: 13px 17px;
+  padding: 12px 16px;
 }
 
 .y2k-photo {
@@ -143,25 +143,25 @@
 }
 .y2k-box {
   border: 2px dashed #ffff00;
-  padding: 5px;
-  margin: 7px 0;
+  padding: 4px;
+  margin: 8px 0;
   font-size: 11px;
 }
 .y2k-box h3 {
   color: #ffff00;
   font-family: Papyrus, fantasy;
   font-size: 15px;
-  margin: 0 0 3px;
+  margin: 0 0 4px;
 }
 .y2k-box p {
-  margin: 2px 0;
+  margin: 4px 0;
 }
 
 /* Social icons at 12px, with no names: easy to miss, impossible to identify by ear. */
 .y2k-icons {
   display: flex;
-  gap: 3px;
-  margin: 5px 0;
+  gap: 4px;
+  margin: 4px 0;
 }
 .y2k-icons a {
   display: inline-flex;
@@ -178,8 +178,8 @@
   color: #ff0000;
   background: #ffff00;
   border: 2px outset #ff00ff;
-  padding: 1px 4px;
-  margin-top: 5px;
+  padding: 4px 4px;
+  margin-top: 4px;
 }
 .y2k-counter {
   font-family: 'Courier New', monospace;
@@ -189,7 +189,7 @@
 .y2k-counter span {
   background: #000000;
   color: #00ff00;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .y2k-name {
@@ -206,7 +206,7 @@
   font-family: 'Comic Sans MS', cursive;
   font-size: 17px;
   color: #00ffff;
-  margin: 3px 0;
+  margin: 4px 0;
 }
 .y2k-sub {
   font-family: 'Courier New', monospace;
@@ -215,14 +215,14 @@
 }
 
 .y2k-section {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 .y2k-h {
   font-family: Papyrus, fantasy;
   font-size: 28px;
   color: #ffff00;
   border-bottom: 3px double #ff00ff;
-  margin: 0 0 7px;
+  margin: 0 0 8px;
 }
 .y2k-bio {
   color: #555555;
@@ -231,8 +231,8 @@
 }
 
 .y2k-job {
-  margin: 11px 0;
-  padding: 5px;
+  margin: 12px 0;
+  padding: 4px;
   background: #1a1a1a;
   border-left: 6px solid #00ff00;
 }
@@ -240,7 +240,7 @@
   height: 22px;
   float: right;
   background: #ffffff;
-  padding: 1px;
+  padding: 0;
 }
 .y2k-logo-dark {
   background: #0e0e10;
@@ -254,17 +254,17 @@
 .y2k-desc {
   color: #4a4a4a;
   font-size: 11px;
-  margin: 3px 0;
+  margin: 4px 0;
 }
 .y2k-tags {
   color: #3d3d3d;
   font-family: 'Courier New', monospace;
   font-size: 9px;
-  margin: 2px 0;
+  margin: 4px 0;
 }
 .y2k-links {
   display: inline-flex;
-  gap: 2px;
+  gap: 4px;
   font-size: 9px;
 }
 
@@ -274,7 +274,7 @@
 }
 .y2k-projects td {
   border: 1px solid #330033;
-  padding: 5px;
+  padding: 4px;
   vertical-align: top;
 }
 .y2k-ptitle {
@@ -294,19 +294,19 @@
   font-size: 11px;
 }
 .y2k-pdesc p {
-  margin: 2px 0;
+  margin: 4px 0;
 }
 .y2k-award {
   color: #ffff00;
   background: #ff0000;
   font-size: 10px;
-  padding: 0 3px;
+  padding: 0 4px;
 }
 
 .y2k-footer {
   border-top: 5px ridge #ff00ff;
   text-align: center;
-  padding: 9px;
+  padding: 8px;
 }
 .y2k-contact {
   color: #666666;
@@ -320,7 +320,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-size: 10px;
 }
 .y2k-ring-icon {
