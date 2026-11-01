@@ -39,12 +39,34 @@
   outline: none;
 }
 
-/* A fixed 980px page, the way it was done in 2007: sideways scrolling on any phone. */
+/* Size to the viewport (capped at 980px) so phones don't scroll sideways. */
 .y2k-page {
-  width: 980px;
+  width: 100%;
+  max-width: 980px;
+  box-sizing: border-box;
   margin: 0 auto;
   border: 5px ridge #ff00ff;
   background: #0a000a;
+  overflow-wrap: break-word;
+}
+
+/* Stack the table layout on narrow screens so its columns can't force overflow. */
+@media (max-width: 700px) {
+  .y2k-layout,
+  .y2k-layout tbody,
+  .y2k-layout tr,
+  .y2k-layout td,
+  .y2k-projects,
+  .y2k-projects tbody,
+  .y2k-projects tr,
+  .y2k-projects td {
+    display: block;
+    width: auto;
+  }
+  .y2k-photo {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 .y2k-banner {
