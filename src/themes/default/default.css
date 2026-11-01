@@ -6,7 +6,7 @@
   --theme-bg: #000000;
   --theme-surface: #1a001a;
   --theme-fg: #ff66ff;
-  --theme-muted: #555555;
+  --theme-muted: #a3a3a3;
   --theme-line: #330033;
   --theme-accent: #00ff00;
   --theme-font-sans: 'Comic Sans MS', 'Comic Sans', cursive;
@@ -27,7 +27,7 @@
   background-position:
     0 0,
     30px 45px;
-  color: #555555;
+  color: #a3a3a3;
   font-family: 'Times New Roman', serif;
   font-size: 13px;
   padding: 7px 0 40px;
@@ -52,7 +52,7 @@
   align-items: center;
   gap: 6px;
   background: #ffff00;
-  color: #ff0000;
+  color: #cc0000;
   font-family: Impact, 'Arial Black', sans-serif;
   font-size: 22px;
   padding: 3px 9px;
@@ -90,16 +90,16 @@
   padding: 2px 5px;
 }
 .y2k a {
-  color: #0000ee;
+  color: #9999ff;
 }
 .y2k a:visited {
-  color: #551a8b;
+  color: #d9a5ff;
 }
 .y2k-nav a {
-  color: #6666ff;
+  color: #9999ff;
 }
 .y2k-skin {
-  color: #6666ff;
+  color: #9999ff;
   font-size: 10px;
   text-decoration: underline;
   cursor: pointer;
@@ -132,7 +132,7 @@
   border: 4px outset #ff00ff;
 }
 .y2k-mood {
-  color: #444444;
+  color: #a3a3a3;
   font-size: 11px;
   font-family: 'Courier New', monospace;
 }
@@ -175,7 +175,7 @@
 .y2k-guestbook {
   font-family: 'Comic Sans MS', cursive;
   font-size: 11px;
-  color: #ff0000;
+  color: #cc0000;
   background: #ffff00;
   border: 2px outset #ff00ff;
   padding: 1px 4px;
@@ -184,7 +184,7 @@
 .y2k-counter {
   font-family: 'Courier New', monospace;
   font-size: 9px;
-  color: #333333;
+  color: #a3a3a3;
 }
 .y2k-counter span {
   background: #000000;
@@ -211,7 +211,7 @@
 .y2k-sub {
   font-family: 'Courier New', monospace;
   font-size: 10px;
-  color: #444444;
+  color: #a3a3a3;
 }
 
 .y2k-section {
@@ -225,7 +225,7 @@
   margin: 0 0 7px;
 }
 .y2k-bio {
-  color: #555555;
+  color: #a3a3a3;
   font-size: 13px;
   line-height: 1.15;
 }
@@ -252,12 +252,12 @@
   margin: 0;
 }
 .y2k-desc {
-  color: #4a4a4a;
+  color: #a3a3a3;
   font-size: 11px;
   margin: 3px 0;
 }
 .y2k-tags {
-  color: #3d3d3d;
+  color: #a3a3a3;
   font-family: 'Courier New', monospace;
   font-size: 9px;
   margin: 2px 0;
@@ -285,12 +285,12 @@
 }
 .y2k-prole,
 .y2k-pdate {
-  color: #444444;
+  color: #a3a3a3;
   font-family: Verdana, sans-serif;
   font-size: 9px;
 }
 .y2k-pdesc {
-  color: #4f4f4f;
+  color: #a3a3a3;
   font-size: 11px;
 }
 .y2k-pdesc p {
@@ -298,7 +298,7 @@
 }
 .y2k-award {
   color: #ffff00;
-  background: #ff0000;
+  background: #cc0000;
   font-size: 10px;
   padding: 0 3px;
 }
@@ -309,11 +309,11 @@
   padding: 9px;
 }
 .y2k-contact {
-  color: #666666;
+  color: #a3a3a3;
   font-size: 12px;
 }
 .y2k-small {
-  color: #2e2e2e;
+  color: #a3a3a3;
   font-size: 9px;
 }
 .y2k-ring {
