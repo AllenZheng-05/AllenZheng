@@ -1,36 +1,329 @@
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/jetbrains-mono';
-
+/*
+ * My homepage, 2007 edition: the "before" for the Fitts demo. Wrong on purpose.
+ * Shell tokens (the theme picker dialog) get the same treatment.
+ */
 :root[data-theme='default'] {
-  --theme-bg: #fbfaf8;
-  --theme-surface: #ffffff;
-  --theme-fg: #18181b;
-  --theme-muted: #64646c;
-  --theme-line: #e7e5e1;
-  --theme-accent: #d7340f;
-  --theme-font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --theme-font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --theme-bg: #000000;
+  --theme-surface: #1a001a;
+  --theme-fg: #ff66ff;
+  --theme-muted: #555555;
+  --theme-line: #330033;
+  --theme-accent: #00ff00;
+  --theme-font-sans: 'Comic Sans MS', 'Comic Sans', cursive;
+  --theme-font-mono: 'Courier New', monospace;
 
-  color-scheme: light;
-  background: var(--theme-bg);
-  scroll-behavior: smooth;
+  color-scheme: dark;
+  background: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme='default'] {
-    --theme-bg: #0e0e10;
-    --theme-surface: #151518;
-    --theme-fg: #ededee;
-    --theme-muted: #9d9da6;
-    --theme-line: #26262b;
-    --theme-accent: #ff6a47;
+.y2k {
+  min-height: 100dvh;
+  background-color: #000000;
+  background-image:
+    radial-gradient(#ffffff 1px, transparent 1px), radial-gradient(#ff00ff 1px, transparent 1px);
+  background-size:
+    60px 60px,
+    90px 90px;
+  background-position:
+    0 0,
+    30px 45px;
+  color: #555555;
+  font-family: 'Times New Roman', serif;
+  font-size: 13px;
+  padding: 7px 0 40px;
+}
 
-    color-scheme: dark;
+/* No focus styles anywhere: "the outline looked ugly". */
+.y2k *:focus,
+.y2k *:focus-visible {
+  outline: none;
+}
+
+/* A fixed 980px page, the way it was done in 2007: sideways scrolling on any phone. */
+.y2k-page {
+  width: 980px;
+  margin: 0 auto;
+  border: 5px ridge #ff00ff;
+  background: #0a000a;
+}
+
+.y2k-banner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffff00;
+  color: #ff0000;
+  font-family: Impact, 'Arial Black', sans-serif;
+  font-size: 22px;
+  padding: 3px 9px;
+  overflow: hidden;
+}
+.y2k-blink {
+  animation: y2k-blink 0.6s steps(1) infinite;
+}
+@keyframes y2k-blink {
+  50% {
+    visibility: hidden;
+  }
+}
+.y2k-marquee {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.y2k-marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: y2k-marquee 11s linear infinite;
+}
+@keyframes y2k-marquee {
+  to {
+    transform: translateX(-100%);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :root[data-theme='default'] {
-    scroll-behavior: auto;
-  }
+.y2k-nav {
+  background: #330033;
+  color: #ff99ff;
+  font-family: Verdana, sans-serif;
+  font-size: 10px;
+  padding: 2px 5px;
+}
+.y2k a {
+  color: #0000ee;
+}
+.y2k a:visited {
+  color: #551a8b;
+}
+.y2k-nav a {
+  color: #6666ff;
+}
+.y2k-skin {
+  color: #6666ff;
+  font-size: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.y2k-skin svg {
+  display: none;
+}
+
+.y2k-layout {
+  width: 100%;
+  border-collapse: collapse;
+}
+.y2k-side {
+  width: 210px;
+  vertical-align: top;
+  padding: 9px;
+  background: #1a001a;
+  border-right: 3px dotted #00ff00;
+}
+.y2k-main {
+  vertical-align: top;
+  padding: 13px 17px;
+}
+
+.y2k-photo {
+  display: block;
+  width: 190px;
+  height: 190px;
+  object-fit: cover;
+  border: 4px outset #ff00ff;
+}
+.y2k-mood {
+  color: #444444;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+}
+.y2k-hello {
+  color: #00ffff;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 12px;
+}
+.y2k-box {
+  border: 2px dashed #ffff00;
+  padding: 5px;
+  margin: 7px 0;
+  font-size: 11px;
+}
+.y2k-box h3 {
+  color: #ffff00;
+  font-family: Papyrus, fantasy;
+  font-size: 15px;
+  margin: 0 0 3px;
+}
+.y2k-box p {
+  margin: 2px 0;
+}
+
+/* Social icons at 12px, with no names: easy to miss, impossible to identify by ear. */
+.y2k-icons {
+  display: flex;
+  gap: 3px;
+  margin: 5px 0;
+}
+.y2k-icons a {
+  display: inline-flex;
+  color: #ff66ff;
+}
+.y2k-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.y2k-guestbook {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 11px;
+  color: #ff0000;
+  background: #ffff00;
+  border: 2px outset #ff00ff;
+  padding: 1px 4px;
+  margin-top: 5px;
+}
+.y2k-counter {
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  color: #333333;
+}
+.y2k-counter span {
+  background: #000000;
+  color: #00ff00;
+  padding: 0 2px;
+}
+
+.y2k-name {
+  font-family: Impact, 'Arial Black', sans-serif;
+  font-size: 48px;
+  color: #ff00ff;
+  text-shadow:
+    3px 3px 0 #00ffff,
+    6px 6px 0 #ffff00;
+  margin: 0;
+  letter-spacing: 2px;
+}
+.y2k-tagline {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 17px;
+  color: #00ffff;
+  margin: 3px 0;
+}
+.y2k-sub {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: #444444;
+}
+
+.y2k-section {
+  margin-top: 18px;
+}
+.y2k-h {
+  font-family: Papyrus, fantasy;
+  font-size: 28px;
+  color: #ffff00;
+  border-bottom: 3px double #ff00ff;
+  margin: 0 0 7px;
+}
+.y2k-bio {
+  color: #555555;
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.y2k-job {
+  margin: 11px 0;
+  padding: 5px;
+  background: #1a1a1a;
+  border-left: 6px solid #00ff00;
+}
+.y2k-logo {
+  height: 22px;
+  float: right;
+  background: #ffffff;
+  padding: 1px;
+}
+.y2k-logo-dark {
+  background: #0e0e10;
+}
+.y2k-role {
+  color: #ff99ff;
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  margin: 0;
+}
+.y2k-desc {
+  color: #4a4a4a;
+  font-size: 11px;
+  margin: 3px 0;
+}
+.y2k-tags {
+  color: #3d3d3d;
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  margin: 2px 0;
+}
+.y2k-links {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 9px;
+}
+
+.y2k-projects {
+  width: 100%;
+  border-collapse: collapse;
+}
+.y2k-projects td {
+  border: 1px solid #330033;
+  padding: 5px;
+  vertical-align: top;
+}
+.y2k-ptitle {
+  width: 170px;
+  color: #ff00ff;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+}
+.y2k-prole,
+.y2k-pdate {
+  color: #444444;
+  font-family: Verdana, sans-serif;
+  font-size: 9px;
+}
+.y2k-pdesc {
+  color: #4f4f4f;
+  font-size: 11px;
+}
+.y2k-pdesc p {
+  margin: 2px 0;
+}
+.y2k-award {
+  color: #ffff00;
+  background: #ff0000;
+  font-size: 10px;
+  padding: 0 3px;
+}
+
+.y2k-footer {
+  border-top: 5px ridge #ff00ff;
+  text-align: center;
+  padding: 9px;
+}
+.y2k-contact {
+  color: #666666;
+  font-size: 12px;
+}
+.y2k-small {
+  color: #2e2e2e;
+  font-size: 9px;
+}
+.y2k-ring {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+}
+.y2k-ring-icon {
+  height: 14px;
+  width: auto;
 }
