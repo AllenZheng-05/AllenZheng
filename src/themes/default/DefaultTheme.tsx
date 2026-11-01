@@ -56,7 +56,7 @@ export default function DefaultTheme({ data }: ThemeProps) {
                 <p className="y2k-mood">
                   Mood: <b>coding</b> :-)
                 </p>
-                <p className="y2k-hello">Welcome to my page, {'{{visitor_name}}'}!</p>
+                <p className="y2k-hello">Welcome to my page, visitor!</p>
                 <div className="y2k-box">
                   <h3>Stuff about me</h3>
                   {profile.facts.map((fact) => (
