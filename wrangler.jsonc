@@ -7,4 +7,7 @@
     "directory": "./dist",
     "not_found_handling": "single-page-application",
   },
+  // Required by `wrangler preview` (non-production branch deploys). Empty is fine:
+  // assets and compatibility settings above are inherited.
+  "previews": {},
 }
