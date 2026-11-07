@@ -1,7 +1,22 @@
 import type { ReactNode } from 'react'
-import type { Experience, Links, Logo, Period, Profile, Project } from '../../data'
+import type {
+  Description,
+  DescriptionFormat,
+  Experience,
+  Links,
+  Logo,
+  Media,
+  Period,
+  Profile,
+  Project,
+} from '../../data'
 import { formatPeriod } from '../../lib/dates'
-import { Chips, ExternalLink, LinkList, Section } from './ui'
+import { Chips, DescriptionText, ExternalLink, LinkList, MediaGallery, Section } from './ui'
+
+// The write-up this theme shows for each entry.
+const DESCRIPTION_FORMAT: DescriptionFormat = 'sentence'
+// Entries that show a different one, by id, e.g. { fitts: 'bullets' }.
+const FORMAT_OVERRIDES: Partial<Record<string, DescriptionFormat>> = {}
 
 export function About({ profile }: { profile: Profile }) {
   return (
@@ -49,6 +64,7 @@ export function ExperienceSection({ experience }: { experience: Experience[] }) 
         {experience.map((job) => (
           <li key={job.id}>
             <Entry
+              id={job.id}
               logo={job.logo}
               heading={
                 <>
@@ -68,6 +84,7 @@ export function ExperienceSection({ experience }: { experience: Experience[] }) 
               }
               period={job.period}
               description={job.description}
+              media={job.media}
               links={job.links}
               linksLabel={`${job.role} at ${job.org}`}
               tags={job.skills}
@@ -87,6 +104,7 @@ export function Projects({ projects }: { projects: Project[] }) {
         {projects.map((project) => (
           <li key={project.id}>
             <Entry
+              id={project.id}
               heading={
                 <>
                   {project.title}
@@ -98,6 +116,7 @@ export function Projects({ projects }: { projects: Project[] }) {
               period={project.period}
               award={project.award}
               description={project.description}
+              media={project.media}
               links={project.links}
               linksLabel={project.title}
               tags={project.stack}
@@ -110,23 +129,27 @@ export function Projects({ projects }: { projects: Project[] }) {
   )
 }
 
-/** One experience or project: optional logo, heading + dates, award, description, links, tags. */
+/** One experience or project: optional logo, heading + dates, award, description, media, links, tags. */
 function Entry({
+  id,
   logo,
   heading,
   period,
   award,
   description,
+  media,
   links,
   linksLabel,
   tags,
   tagsLabel,
 }: {
+  id: string
   logo?: Logo
   heading: ReactNode
   period: Period
   award?: string
-  description: string
+  description: Description
+  media?: Media[]
   links: Links
   linksLabel: string
   tags: string[]
@@ -155,7 +178,12 @@ function Entry({
           <h3 className="text-lg font-semibold tracking-tight">{heading}</h3>
           <p className="shrink-0 font-mono text-xs text-muted">{formatPeriod(period)}</p>
         </div>
-        <p className="mt-2 leading-relaxed text-muted">{description}</p>
+        <DescriptionText
+          description={description}
+          format={FORMAT_OVERRIDES[id] ?? DESCRIPTION_FORMAT}
+          className="mt-2 leading-relaxed text-muted"
+        />
+        <MediaGallery media={media} label={linksLabel} className="mt-4" />
         <LinkList links={links} label={linksLabel} className="mt-3" />
         <div className="mt-4">
           <Chips items={tags} label={tagsLabel} award={award} />

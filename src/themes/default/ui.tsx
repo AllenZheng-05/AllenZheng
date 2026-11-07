@@ -7,7 +7,7 @@ import {
   TrophyIcon,
   YouTubeIcon,
 } from '../../components/icons'
-import type { Links } from '../../data'
+import type { Description, DescriptionFormat, Links, Media } from '../../data'
 
 export function Section({
   id,
@@ -65,6 +65,91 @@ export function Chips({
       ))}
     </ul>
   )
+}
+
+/** An entry's write-up in the given format. */
+export function DescriptionText({
+  description,
+  format,
+  className = '',
+}: {
+  description: Description
+  format: DescriptionFormat
+  className?: string
+}) {
+  if (format === 'bullets') {
+    return (
+      <ul className={`list-disc space-y-1 pl-5 ${className}`}>
+        {description.bullets.map((bullet) => (
+          <li key={bullet}>{bullet}</li>
+        ))}
+      </ul>
+    )
+  }
+  return <p className={className}>{description[format]}</p>
+}
+
+/** Grid of an entry's videos, GIFs, and screenshots. Renders nothing when there are none. */
+export function MediaGallery({
+  media = [],
+  label,
+  className = '',
+}: {
+  media?: Media[]
+  /** What the media belongs to, for screen readers (e.g. the project title). */
+  label: string
+  className?: string
+}) {
+  if (media.length === 0) return null
+
+  return (
+    <ul aria-label={`${label} media`} className={`grid gap-3 sm:grid-cols-2 ${className}`}>
+      {media.map((item) => (
+        <li key={item.src}>
+          <figure>
+            <MediaItem item={item} />
+            {item.caption && (
+              <figcaption className="mt-2 font-mono text-xs text-muted">{item.caption}</figcaption>
+            )}
+          </figure>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function MediaItem({ item }: { item: Media }) {
+  const className = 'aspect-video w-full rounded-xl border border-line bg-surface object-contain'
+
+  switch (item.kind) {
+    case 'image':
+      return (
+        <img src={item.src} alt={item.alt} loading="lazy" decoding="async" className={className} />
+      )
+    case 'video':
+      return (
+        <video
+          src={item.src}
+          poster={item.poster}
+          aria-label={item.alt}
+          controls
+          playsInline
+          preload="metadata"
+          className={className}
+        />
+      )
+    case 'embed':
+      return (
+        <iframe
+          src={item.src}
+          title={item.alt}
+          loading="lazy"
+          allow="encrypted-media; picture-in-picture"
+          allowFullScreen
+          className={className}
+        />
+      )
+  }
 }
 
 const LINK_ORDER: (keyof Links)[] = ['live', 'source', 'demo', 'video', 'post']

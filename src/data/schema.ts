@@ -44,6 +44,44 @@ export interface Links {
   post?: string
 }
 
+/**
+ * The same write-up at three lengths. Every entry has all three, so a theme can show
+ * whichever suits its design without worrying about what an entry happens to include.
+ */
+export interface Description {
+  /** A single sentence. */
+  sentence: string
+  /** A short paragraph. */
+  paragraph: string
+  /** Resume-style bullet points. */
+  bullets: string[]
+}
+
+export type DescriptionFormat = keyof Description
+
+interface MediaBase extends Image {
+  caption?: string
+}
+
+/** A screenshot or GIF (import the file from src/assets). */
+export interface ImageMedia extends MediaBase {
+  kind: 'image'
+}
+
+/** A video file, e.g. .mp4 or .webm (import the file from src/assets). */
+export interface VideoMedia extends MediaBase {
+  kind: 'video'
+  /** Image shown before the video plays. */
+  poster?: string
+}
+
+/** A hosted player, e.g. "https://www.youtube-nocookie.com/embed/<id>". */
+export interface EmbedMedia extends MediaBase {
+  kind: 'embed'
+}
+
+export type Media = ImageMedia | VideoMedia | EmbedMedia
+
 export interface Fact {
   label: string
   value: string
@@ -74,17 +112,17 @@ export interface Experience {
   orgUrl?: string
   logo?: Logo
   period: Period
-  /** One or two sentences. */
-  description: string
+  description: Description
   skills: string[]
   links: Links
+  /** Demo videos, GIFs, and screenshots, in display order. */
+  media?: Media[]
 }
 
 export interface Project {
   id: string
   title: string
-  /** One or two sentences. */
-  description: string
+  description: Description
   period: Period
   /** What Allen did on the project, when it isn't obvious (e.g. "Founder & sole developer"). */
   role?: string
@@ -92,6 +130,8 @@ export interface Project {
   award?: string
   stack: string[]
   links: Links
+  /** Demo videos, GIFs, and screenshots, in display order. */
+  media?: Media[]
 }
 
 export interface Portfolio {

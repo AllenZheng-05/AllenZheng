@@ -22,7 +22,7 @@ export const profile: Profile = {
     { label: 'Based in', value: 'Dallas, TX' },
     { label: 'Studying', value: 'B.S. Computer Science, UT Dallas' },
   ],
-  email: 'hello@allenzheng.com',
+  email: 'allen@allenzheng.com',
   github: 'https://github.com/AllenZheng-05',
   linkedin: 'https://www.linkedin.com/in/allen-zheng05/',
   resumeUrl: '/resume.pdf',

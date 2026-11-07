@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { portfolio } from '../data'
+import { portfolio, type Description } from '../data'
 import { pathForTheme } from './theme-route'
 import { ThemeProvider } from './ThemeProvider'
 import { availableThemes } from './themes'
 
 // The theme contract: every theme must show all of the portfolio's information and the
 // essential links, and must offer a way to switch themes. Adding a project, job, or theme
-// without wiring it up everywhere fails this test.
+// without wiring it up everywhere fails this test. Each entry's description may appear in any
+// format, and showing its media is up to the theme.
 describe.each(availableThemes.map((theme) => [theme.name, theme] as const))(
   'theme contract: %s',
   (_name, theme) => {
@@ -31,21 +32,27 @@ describe.each(availableThemes.map((theme) => [theme.name, theme] as const))(
         profile.tagline,
         ...profile.bio,
         ...profile.facts.map((fact) => fact.value),
-        ...portfolio.experience.flatMap((job) => [
-          job.role,
-          job.org,
-          job.description,
-          ...job.skills,
-        ]),
+        ...portfolio.experience.flatMap((job) => [job.role, job.org, ...job.skills]),
         ...portfolio.projects.flatMap((project) => [
           project.title,
-          project.description,
           ...(project.award ? [project.award] : []),
           ...project.stack,
         ]),
       ]
       const missing = required.filter((value) => !text.includes(value))
       expect(missing).toEqual([])
+    })
+
+    it('shows every description in one of its formats', async () => {
+      const text = await renderTheme()
+      const isShown = ({ sentence, paragraph, bullets }: Description) =>
+        [[sentence], [paragraph], bullets].some((format) =>
+          format.every((value) => text.includes(value)),
+        )
+
+      const entries = [...portfolio.experience, ...portfolio.projects]
+      const missing = entries.filter((entry) => !isShown(entry.description))
+      expect(missing.map((entry) => entry.id)).toEqual([])
     })
 
     it('links to every experience and project link, and shows every logo', async () => {

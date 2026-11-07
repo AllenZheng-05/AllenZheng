@@ -22,6 +22,14 @@ describe('portfolio data', () => {
     }
   })
 
+  it('fills in every description format', () => {
+    for (const { id, description } of [...portfolio.experience, ...portfolio.projects]) {
+      const { sentence, paragraph, bullets } = description
+      expect([sentence, paragraph, ...bullets].every(Boolean), id).toBe(true)
+      expect(bullets.length, id).toBeGreaterThan(0)
+    }
+  })
+
   it('uses https links', () => {
     const { profile } = portfolio
     const links = [
@@ -30,6 +38,9 @@ describe('portfolio data', () => {
       ...portfolio.experience.flatMap((job) => (job.orgUrl ? [job.orgUrl] : [])),
       ...[...portfolio.experience, ...portfolio.projects].flatMap((item) =>
         Object.values(item.links),
+      ),
+      ...[...portfolio.experience, ...portfolio.projects].flatMap((item) =>
+        (item.media ?? []).filter((media) => media.kind === 'embed').map((media) => media.src),
       ),
     ]
     for (const link of links) expect(link).toMatch(/^https:\/\//)
