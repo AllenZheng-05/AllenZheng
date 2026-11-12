@@ -97,9 +97,17 @@ export function ExperienceSection({ experience }: { experience: Experience[] }) 
   )
 }
 
-export function Projects({ projects }: { projects: Project[] }) {
+export function Projects({
+  id,
+  title,
+  projects,
+}: {
+  id: string
+  title: string
+  projects: Project[]
+}) {
   return (
-    <Section id="projects" title="Projects">
+    <Section id={id} title={title}>
       <ul className="space-y-12">
         {projects.map((project) => (
           <li key={project.id}>

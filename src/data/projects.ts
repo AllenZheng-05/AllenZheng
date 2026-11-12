@@ -3,8 +3,70 @@ import type { Project } from './schema'
 // Newest first.
 export const projects: Project[] = [
   {
+    id: 'finding-nemo',
+    title: 'FindingNemo',
+    category: 'hackathon',
+    description: {
+      sentence:
+        'A platform, built at HackUTD 2026, where NVIDIA Nemotron agents turn plain-English intents into live disaster heat maps.',
+      paragraph:
+        'A platform, built by a team of four at HackUTD 2026, where NVIDIA Nemotron agents turn plain-English intents into live disaster heat maps. Five agents act only through guarded, traceable tools, while a NumPy engine scores a 250,000-cell grid in half a second with no LLM in the hot path, and every agent weight change must pass a held-out backtest first. I built the entire dynamic frontend, from the app builder to a live Leaflet map that flashes each agent change, plus the live judging demo.',
+      bullets: [
+        'Architected a platform where NVIDIA Nemotron agents turn plain-English intents into live disaster heat maps',
+        'Engineered a NumPy engine scoring a 250,000-cell grid in 0.5 s per 2 s tick, with no LLM in the hot path',
+        'Orchestrated 5 Nemotron agents that act only through guarded tools, with every change traced and revertible',
+        'Gated each agent weight change on a held-out backtest (70/30 split), within locked, stiff, and flexible tier caps',
+        'Located where a crowd flees from to 6.6 m median error via least squares, beating the reference in 12 of 15 tests',
+        'Raised compile success from 27.5% to 100% under a shared 40 RPM budget via token-bucket admission',
+        'Built the dynamic React/TypeScript frontend, from an app builder to a live Leaflet map flashing agent changes',
+        'Built the live judging demo, compiling new apps as simulated users streamed in and Nemotron re-weighted the map',
+        'Shipped 45K+ lines and 900+ offline tests replaying recorded model responses, with CI on every pull request',
+      ],
+    },
+    period: { start: '2026-11' },
+    stack: [
+      'Python',
+      'FastAPI',
+      'NumPy',
+      'Pydantic',
+      'SQLite',
+      'WebSockets',
+      'NVIDIA Nemotron',
+      'OpenAI SDK',
+      'Tavily',
+      'OpenStreetMap',
+      'Nominatim',
+      'Open-Meteo',
+      'React',
+      'TypeScript',
+      'Vite',
+      'Tailwind CSS',
+      'Leaflet',
+      'Zustand',
+      'Three.js',
+      'React Three Fiber',
+      'GLSL',
+      'pytest',
+      'Ruff',
+      'GitHub Actions',
+    ],
+    links: {
+      source: 'https://github.com/ramgudur/finding-nemo',
+      demo: 'https://devpost.com/software/findingnemo',
+      video: 'https://www.youtube.com/watch?v=Ci94G8kC-Y8',
+    },
+    media: [
+      {
+        kind: 'embed',
+        src: 'https://www.youtube-nocookie.com/embed/Ci94G8kC-Y8',
+        alt: 'FindingNemo demo video',
+      },
+    ],
+  },
+  {
     id: 'fitts',
     title: 'Fitts',
+    category: 'hackathon',
     description: {
       sentence:
         'A desktop AI agent, built solo for the Meta Global AI Hackathon, that audits web and Android apps and fixes their bugs.',
@@ -59,6 +121,7 @@ export const projects: Project[] = [
   {
     id: 'reagent',
     title: 'Reagent',
+    category: 'hackathon',
     description: {
       sentence:
         'An enterprise AI-agent platform where every agent inherits org-wide models, tools, and guardrails.',
@@ -101,6 +164,7 @@ export const projects: Project[] = [
   {
     id: 'open-team-sheets',
     title: 'Open Team Sheets',
+    category: 'personal',
     description: {
       sentence: 'An open-source search engine and team builder for competitive Pokémon VGC teams.',
       paragraph:
@@ -136,6 +200,7 @@ export const projects: Project[] = [
   {
     id: 'utd-grades',
     title: 'UTD Grades',
+    category: 'personal',
     description: {
       sentence: 'ACM UTD’s open-source catalog of course grade distributions.',
       paragraph:
@@ -158,6 +223,7 @@ export const projects: Project[] = [
   {
     id: 'jpmc-data-for-good',
     title: 'Data for Good: Fort Worth Community Land Trust',
+    category: 'hackathon',
     description: {
       sentence:
         'Built a data pipeline and weighted scoring model to increase the workflow efficiency of the Fort Worth Community Land Trust.',
@@ -182,6 +248,7 @@ export const projects: Project[] = [
   {
     id: 'netflix-content-analysis',
     title: 'Netflix Content Analysis',
+    category: 'personal',
     description: {
       sentence:
         'My Data Analysis course project testing what actually predicts a Netflix title’s rating and viewership.',
@@ -202,6 +269,7 @@ export const projects: Project[] = [
   {
     id: 'mindcraft',
     title: 'MindCraft',
+    category: 'hackathon',
     description: {
       sentence:
         'A full-stack machine learning platform with a pipeline that takes you from raw data (tabular or image) to a fully trained and deployed model using Random Forest and MobileNetV2 transfer learning.',
@@ -226,6 +294,7 @@ export const projects: Project[] = [
   {
     id: 'docbranch',
     title: 'DocBranch',
+    category: 'personal',
     description: {
       sentence: 'A version-controlled resume editor that tailors your resume to a job description.',
       paragraph:
@@ -250,6 +319,7 @@ export const projects: Project[] = [
   {
     id: 'forkast',
     title: 'Forkast',
+    category: 'hackathon',
     description: {
       sentence:
         'A meal-tracking app that uses image recognition to analyze the nutritional content and breakdown of your diet.',
@@ -272,6 +342,7 @@ export const projects: Project[] = [
   {
     id: 'wanderlogic',
     title: 'WanderLogic',
+    category: 'hackathon',
     description: {
       sentence: 'A travel-planning app built with logic programming.',
       paragraph:
@@ -292,6 +363,7 @@ export const projects: Project[] = [
   {
     id: 'candidate-compass',
     title: 'Candidate Compass',
+    category: 'personal',
     description: {
       sentence:
         'An iOS app with detailed news and information about the 2024 election and its candidates.',

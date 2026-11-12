@@ -119,9 +119,13 @@ export interface Experience {
   media?: Media[]
 }
 
+export type ProjectCategory = 'personal' | 'hackathon'
+
 export interface Project {
   id: string
   title: string
+  /** Themes can group projects by this, e.g. into separate sections. */
+  category: ProjectCategory
   description: Description
   period: Period
   /** What Allen did on the project, when it isn't obvious (e.g. "Founder & sole developer"). */

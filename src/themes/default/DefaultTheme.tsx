@@ -17,6 +17,7 @@ const NAV = [
   { href: '#about', label: 'About' },
   { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
+  { href: '#hackathons', label: 'Hackathons' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -39,7 +40,16 @@ export default function DefaultTheme({ data }: ThemeProps) {
         <Hero profile={profile} />
         <About profile={profile} />
         <ExperienceSection experience={data.experience} />
-        <Projects projects={data.projects} />
+        <Projects
+          id="projects"
+          title="Projects"
+          projects={data.projects.filter((project) => project.category === 'personal')}
+        />
+        <Projects
+          id="hackathons"
+          title="Hackathons"
+          projects={data.projects.filter((project) => project.category === 'hackathon')}
+        />
       </main>
       <Footer profile={profile} />
     </div>
