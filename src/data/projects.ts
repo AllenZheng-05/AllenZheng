@@ -331,27 +331,27 @@ export const projects: Project[] = [
       post: 'https://www.linkedin.com/posts/allen-zheng05_dataforgood-share-7449188457861767169-JxsG',
     },
   },
-  {
-    id: 'netflix-content-analysis',
-    title: 'Netflix Content Analysis',
-    category: 'personal',
-    description: {
-      sentence:
-        'My Data Analysis course project testing what actually predicts a Netflix title’s rating and viewership.',
-      paragraph:
-        'My Data Analysis course project: what actually predicts a Netflix title’s rating and viewership? Genre is the strongest predictor of IMDb score via one-way ANOVA (F = 64.61, p < 0.001), and IMDb score is only weakly correlated (r = 0.23) with global top-10 viewership.',
-      bullets: [
-        'Collaborated with two students to analyze 8,807 Netflix titles in R, joining catalog, IMDb rating, and weekly global streaming datasets to test genre, country, and description sentiment as predictors of rating and viewership',
-        'Ran one-way ANOVA tests identifying genre as the strongest predictor of IMDb score (F = 64.61, p < 0.001), spanning a 2-point spread from horror (5.37) to Crime TV (7.25)',
-        'Confirmed country of origin as a significant predictor (ANOVA F = 14.32, p < 0.001), with South Korean titles averaging a 7.25 IMDb score vs. 6.57 for the U.S.',
-        'Built an AFINN-lexicon sentiment model with tidytext on title descriptions, distinguishing a statistically significant but practically negligible signal (r = 0.055, p = 0.001) from a genuine predictor',
-        'Found IMDb score only weakly correlated (r = 0.23) with Netflix global top-10 viewership, showing critical reception and streaming popularity are distinct outcomes',
-      ],
-    },
-    period: { start: '2026-03', end: '2026-05' },
-    stack: ['R', 'tidyverse', 'tidytext', 'ANOVA', 'Sentiment Analysis'],
-    links: {},
-  },
+  // {
+  //   id: 'netflix-content-analysis',
+  //   title: 'Netflix Content Analysis',
+  //   category: 'personal',
+  //   description: {
+  //     sentence:
+  //       'My Data Analysis course project testing what actually predicts a Netflix title’s rating and viewership.',
+  //     paragraph:
+  //       'My Data Analysis course project: what actually predicts a Netflix title’s rating and viewership? Genre is the strongest predictor of IMDb score via one-way ANOVA (F = 64.61, p < 0.001), and IMDb score is only weakly correlated (r = 0.23) with global top-10 viewership.',
+  //     bullets: [
+  //       'Collaborated with two students to analyze 8,807 Netflix titles in R, joining catalog, IMDb rating, and weekly global streaming datasets to test genre, country, and description sentiment as predictors of rating and viewership',
+  //       'Ran one-way ANOVA tests identifying genre as the strongest predictor of IMDb score (F = 64.61, p < 0.001), spanning a 2-point spread from horror (5.37) to Crime TV (7.25)',
+  //       'Confirmed country of origin as a significant predictor (ANOVA F = 14.32, p < 0.001), with South Korean titles averaging a 7.25 IMDb score vs. 6.57 for the U.S.',
+  //       'Built an AFINN-lexicon sentiment model with tidytext on title descriptions, distinguishing a statistically significant but practically negligible signal (r = 0.055, p = 0.001) from a genuine predictor',
+  //       'Found IMDb score only weakly correlated (r = 0.23) with Netflix global top-10 viewership, showing critical reception and streaming popularity are distinct outcomes',
+  //     ],
+  //   },
+  //   period: { start: '2026-03', end: '2026-05' },
+  //   stack: ['R', 'tidyverse', 'tidytext', 'ANOVA', 'Sentiment Analysis'],
+  //   links: {},
+  // },
   {
     id: 'mindcraft',
     title: 'MindCraft',
@@ -449,7 +449,7 @@ export const projects: Project[] = [
   {
     id: 'candidate-compass',
     title: 'Candidate Compass',
-    category: 'personal',
+    category: 'hackathon',
     description: {
       sentence:
         'An iOS app with detailed news and information about the 2024 election and its candidates.',
