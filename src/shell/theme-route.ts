@@ -4,7 +4,8 @@ export const SITE_URL = 'https://allenzheng.com'
 
 /**
  * Each theme lives at its own path: the default theme at "/", every other theme at "/<id>".
- * Returns null for paths that aren't a theme's canonical home (including "/default").
+ * Returns null for paths that aren't a theme's canonical home (including "/" followed by the
+ * default theme's id).
  */
 export function themeIdFromPath(pathname: string): string | null {
   const segment = pathname.replace(/^\/+|\/+$/g, '')
@@ -18,9 +19,9 @@ export function pathForTheme(id: string): string {
 }
 
 /**
- * Reads the theme from the current URL. Non-canonical paths — "/default", trailing slashes,
- * unknown or unreleased themes — are rewritten in place (keeping ?query and #hash) and fall
- * back to the default theme.
+ * Reads the theme from the current URL. Non-canonical paths — "/" followed by the default theme's
+ * id, trailing slashes, unknown or unreleased themes — are rewritten in place (keeping ?query and
+ * #hash) and fall back to the default theme.
  */
 export function resolveThemeFromLocation(): string {
   const { pathname, search, hash } = window.location

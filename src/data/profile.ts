@@ -3,7 +3,7 @@ import type { Profile } from './schema'
 
 export const profile: Profile = {
   name: 'Allen Zheng',
-  headline: 'Software Engineer',
+  headline: 'CS student',
   tagline: 'I build things to solve problems.',
   location: 'Dallas, TX',
   // Placeholder until a professional headshot replaces src/assets/allen.jpg.

@@ -132,6 +132,8 @@ export interface Project {
   role?: string
   /** Competition result, e.g. "HackAI 2026 — Track Winner". */
   award?: string
+  /** The hackathon or competition this was built for. */
+  event?: string
   stack: string[]
   links: Links
   /** Demo videos, GIFs, and screenshots, in display order. */

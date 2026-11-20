@@ -36,19 +36,24 @@ describe('resolveThemeFromLocation', () => {
     })
   })
 
-  it('redirects /default to / and keeps the query and hash', () => {
-    expect(visit('/default?ref=resume#about')).toEqual({
+  it('redirects the default theme’s id to / and keeps the query and hash', () => {
+    expect(visit(`/${DEFAULT_THEME_ID}?ref=x#y`)).toEqual({
       id: DEFAULT_THEME_ID,
-      url: '/?ref=resume#about',
+      url: '/?ref=x#y',
     })
   })
 
   it('normalizes trailing slashes', () => {
-    expect(visit('/default/').url).toBe('/')
+    expect(visit(`/${DEFAULT_THEME_ID}/`).url).toBe('/')
   })
 
-  it('sends unknown and unreleased themes to /', () => {
+  it('sends unknown and unreleased themes to /, keeping the query and hash', () => {
     expect(visit('/pokemom')).toEqual({ id: DEFAULT_THEME_ID, url: '/' })
     expect(visit('/pokemon')).toEqual({ id: DEFAULT_THEME_ID, url: '/' })
+    // "/default" is no theme's path (the default theme's id is not "default")
+    expect(visit('/default?ref=resume#about')).toEqual({
+      id: DEFAULT_THEME_ID,
+      url: '/?ref=resume#about',
+    })
   })
 })

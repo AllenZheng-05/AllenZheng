@@ -1,3 +1,8 @@
+import docBranchCapture from '../assets/projects/docbranch.jpg'
+import headlessSportsCapture from '../assets/projects/headless-sports.jpg'
+import openTeamSheetsCapture from '../assets/projects/open-team-sheets.jpg'
+import toeToToeCapture from '../assets/projects/toe-to-toe.jpg'
+import utdGradesCapture from '../assets/projects/utd-grades.jpg'
 import type { Project } from './schema'
 
 // Newest first.
@@ -42,6 +47,13 @@ export const projects: Project[] = [
       live: 'https://toetotoe.allenzheng.com',
       source: 'https://github.com/AllenZheng-05/ToeToToe',
     },
+    media: [
+      {
+        kind: 'image',
+        src: toeToToeCapture,
+        alt: 'Toe to Toe mid-duel: two sock puppets with swords on a paper stage',
+      },
+    ],
   },
   {
     id: 'headless-sports',
@@ -87,11 +99,19 @@ export const projects: Project[] = [
       live: 'https://headlesssports.allenzheng.com',
       source: 'https://github.com/AllenZheng-05/headlesssports',
     },
+    media: [
+      {
+        kind: 'image',
+        src: headlessSportsCapture,
+        alt: 'Headless Sports menu: six sport cards to pick from, with the camera on',
+      },
+    ],
   },
   {
     id: 'finding-nemo',
     title: 'FindingNemo',
     category: 'hackathon',
+    event: 'HackUTD 2026',
     description: {
       sentence:
         'A platform, built at HackUTD 2026, where NVIDIA Nemotron agents turn plain-English intents into live disaster heat maps.',
@@ -153,6 +173,7 @@ export const projects: Project[] = [
     id: 'fitts',
     title: 'Fitts',
     category: 'hackathon',
+    event: 'Meta Global AI Hackathon',
     description: {
       sentence:
         'A desktop AI agent, built solo for the Meta Global AI Hackathon, that audits web and Android apps and fixes their bugs.',
@@ -282,6 +303,13 @@ export const projects: Project[] = [
       live: 'https://openteamsheets.com',
       source: 'https://github.com/AllenZheng-05/openTeamSheets',
     },
+    media: [
+      {
+        kind: 'image',
+        src: openTeamSheetsCapture,
+        alt: 'Open Team Sheets tournament search: the most used teams, each with six Pokémon and their moves',
+      },
+    ],
   },
   {
     id: 'utd-grades',
@@ -305,6 +333,13 @@ export const projects: Project[] = [
       live: 'https://utdgrades.com',
       source: 'https://github.com/acmutd/utd-grades',
     },
+    media: [
+      {
+        kind: 'image',
+        src: utdGradesCapture,
+        alt: 'UTD Grades: the grade distribution chart for one section of CS 1337 beside the list of sections',
+      },
+    ],
   },
   {
     id: 'jpmc-data-for-good',
@@ -401,6 +436,13 @@ export const projects: Project[] = [
       source: 'https://github.com/acm-projects/DocBranch',
       video: 'https://www.youtube.com/watch?v=Q4CYBV41KRI&t=3333s',
     },
+    media: [
+      {
+        kind: 'image',
+        src: docBranchCapture,
+        alt: 'DocBranch welcome screen: document branching, professional templates and version tracking',
+      },
+    ],
   },
   {
     id: 'forkast',
