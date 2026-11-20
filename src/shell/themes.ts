@@ -1,7 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 import type { Portfolio } from '../data'
-import DefaultPreview from '../themes/default/Preview'
 import PokemonPreview from '../themes/pokemon/Preview'
+import ScrollPreview from '../themes/scroll/Preview'
 import VSCodePreview from '../themes/vscode/Preview'
 
 export interface ThemeProps {
@@ -11,7 +11,6 @@ export interface ThemeProps {
 interface ThemeBase {
   id: string
   name: string
-  description: string
   /** Small illustration shown in the theme picker. Kept tiny because it loads eagerly. */
   Preview: ComponentType
 }
@@ -32,30 +31,27 @@ export type ThemeDefinition = AvailableTheme | UpcomingTheme
 // then register it here.
 export const themes: ThemeDefinition[] = [
   {
-    id: 'default',
-    name: 'Default',
-    description: 'Simple and minimal design',
+    id: 'scroll',
+    name: 'Scroll',
     status: 'available',
-    Preview: DefaultPreview,
-    Component: lazy(() => import('../themes/default')),
+    Preview: ScrollPreview,
+    Component: lazy(() => import('../themes/scroll')),
   },
   {
     id: 'pokemon',
     name: 'Pokémon',
-    description: 'Me as a Pokédex entry.',
     status: 'coming-soon',
     Preview: PokemonPreview,
   },
   {
     id: 'vscode',
     name: 'VS Code',
-    description: 'Browse my work like a codebase.',
     status: 'coming-soon',
     Preview: VSCodePreview,
   },
 ]
 
-export const DEFAULT_THEME_ID = 'default'
+export const DEFAULT_THEME_ID = 'scroll'
 
 export const availableThemes = themes.filter(
   (theme): theme is AvailableTheme => theme.status === 'available',

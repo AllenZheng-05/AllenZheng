@@ -1,14 +1,17 @@
-import { useId, useRef } from 'react'
+import { useId, useRef, type ReactNode } from 'react'
 import { CloseIcon, PaletteIcon } from '../components/icons'
+import { site } from '../data'
 import { ThemePicker } from './ThemePicker'
 
 interface ThemeMenuProps {
   className?: string
   label?: string
+  /** Replaces the palette icon and label inside the button. */
+  children?: ReactNode
 }
 
 /** A "Theme" button that opens the theme picker in a modal dialog. Every theme includes one. */
-export function ThemeMenu({ className, label = 'Theme' }: ThemeMenuProps) {
+export function ThemeMenu({ className, label = site.themeButton, children }: ThemeMenuProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const titleId = useId()
   const close = () => dialogRef.current?.close()
@@ -17,13 +20,17 @@ export function ThemeMenu({ className, label = 'Theme' }: ThemeMenuProps) {
     <>
       <button
         type="button"
-        aria-label="Change theme"
+        aria-label={site.changeTheme}
         aria-haspopup="dialog"
         onClick={() => dialogRef.current?.showModal()}
         className={className}
       >
-        <PaletteIcon className="size-4" />
-        {label}
+        {children ?? (
+          <>
+            <PaletteIcon className="size-4" />
+            {label}
+          </>
+        )}
       </button>
       <dialog
         ref={dialogRef}
@@ -38,13 +45,13 @@ export function ThemeMenu({ className, label = 'Theme' }: ThemeMenuProps) {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 id={titleId} className="text-lg font-semibold tracking-tight">
-                Choose a theme
+                {site.chooseTheme}
               </h2>
             </div>
             <button
               type="button"
               onClick={close}
-              aria-label="Close"
+              aria-label={site.closePicker}
               className="-m-1 rounded-lg p-1.5 text-muted transition-colors hover:bg-fg/5 hover:text-fg"
             >
               <CloseIcon className="size-5" />

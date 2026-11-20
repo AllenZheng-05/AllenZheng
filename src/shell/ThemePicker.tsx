@@ -1,4 +1,5 @@
 import type { MouseEvent } from 'react'
+import { site } from '../data'
 import { useTheme } from './theme-context'
 import { pathForTheme } from './theme-route'
 import type { ThemeDefinition } from './themes'
@@ -30,7 +31,7 @@ export function ThemePicker({ onSelect }: ThemePickerProps) {
           return (
             <li key={theme.id}>
               <div aria-disabled="true" className={`${card} cursor-not-allowed`}>
-                <CardBody theme={theme} badge="Coming soon" />
+                <CardBody theme={theme} badge="coming-soon" />
               </div>
             </li>
           )
@@ -53,7 +54,7 @@ export function ThemePicker({ onSelect }: ThemePickerProps) {
               onClick={onClick}
               className={`${card} transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-fg/30 hover:shadow-lg hover:shadow-fg/5 aria-[current=page]:border-accent aria-[current=page]:ring-1 aria-[current=page]:ring-accent motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
             >
-              <CardBody theme={theme} badge={isCurrent ? 'Current' : undefined} />
+              <CardBody theme={theme} badge={isCurrent ? 'current' : undefined} />
             </a>
           </li>
         )
@@ -62,7 +63,7 @@ export function ThemePicker({ onSelect }: ThemePickerProps) {
   )
 }
 
-function CardBody({ theme, badge }: { theme: ThemeDefinition; badge?: 'Current' | 'Coming soon' }) {
+function CardBody({ theme, badge }: { theme: ThemeDefinition; badge?: 'current' | 'coming-soon' }) {
   return (
     <>
       <div
@@ -74,18 +75,17 @@ function CardBody({ theme, badge }: { theme: ThemeDefinition; badge?: 'Current' 
       <div className="min-w-0 flex-1 sm:mt-3">
         <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 px-1">
           <span className="font-medium">{theme.name}</span>
-          {badge === 'Current' && (
+          {badge === 'current' && (
             <span className="rounded-full bg-accent/10 px-2 py-0.5 font-mono text-[0.6875rem] text-accent">
-              Current
+              {site.currentTheme}
             </span>
           )}
-          {badge === 'Coming soon' && (
+          {badge === 'coming-soon' && (
             <span className="rounded-full bg-muted/10 px-2 py-0.5 font-mono text-[0.6875rem] text-muted">
-              Coming soon
+              {site.comingSoon}
             </span>
           )}
         </div>
-        <p className="mt-1 px-1 pb-1 text-sm text-muted">{theme.description}</p>
       </div>
     </>
   )

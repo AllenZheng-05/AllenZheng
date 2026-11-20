@@ -9,4 +9,5 @@ export const portfolio: Portfolio = {
   projects,
 }
 
+export { site } from './site'
 export type * from './schema'

@@ -1,0 +1,1369 @@
+@font-face {
+  font-family: 'Allen Hand';
+  src: url('../../assets/hand/AllenHand.woff2') format('woff2');
+  font-display: block;
+}
+
+@keyframes scroll-press {
+  0% {
+    transform: scale(1.9) rotate(-14deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(0.93) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Every rule below is nested under .scroll-theme, so nothing leaks into the shell or other themes. */
+.scroll-theme {
+  --ink: #1e1a16;
+  --ink2: #4a4136;
+  /* the role line under the name: the scaled-down inscription sits on the darker top of the paper */
+  --ink2-strong: #3f372d;
+  --paper: #d9c7a0;
+  --red: #a8321f;
+  /* vermilion for small text: at least 4.5:1 on the paper as rendered (also its darker 25%), at
+     1366x768 and 390x844, in both arts */
+  --red-text: #762117;
+  --link: #243f5c;
+  --wood: #3a2416;
+  --hand: 'Allen Hand', 'Segoe Print', 'Bradley Hand', cursive;
+
+  /* the shell's tokens, so the theme picker dialog matches the paper */
+  --theme-bg: #e6d6ae;
+  --theme-surface: #eadcb8;
+  --theme-fg: #1e1a16;
+  --theme-muted: #4a4136;
+  --theme-line: #8a7a5c;
+  /* the picker's "Current" badge is small text: the vermilion for text */
+  --theme-accent: #762117;
+  --theme-font-sans: 'Allen Hand', 'Segoe Print', 'Bradley Hand', cursive;
+  --theme-font-mono: 'Allen Hand', 'Segoe Print', 'Bradley Hand', cursive;
+
+  background: #e9e4da;
+  overflow-x: clip;
+  min-height: 100dvh;
+  font: 400 calc(19px * 1.06) / 1.55 var(--hand);
+  color: var(--ink);
+  padding: 12px clamp(10px, 4vw, 56px) 56px;
+  -webkit-font-smoothing: antialiased;
+  /* the page keeps its scroll position itself when the inscription is fitted (layout/dom.ts): the
+     browser's scroll anchoring would follow the measuring passes and move the page */
+  overflow-anchor: none;
+
+  /* preflight leaves these as they are in a browser; the design mock-up expects them plain */
+  .paper i,
+  .slip i {
+    font-style: normal;
+  }
+  .st svg,
+  .seal svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .paper .mail:focus-visible,
+  .paper .theme-btn:focus-visible,
+  .webring a:focus-visible,
+  .slip a:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+  }
+
+  /* the hanging scroll: cord, rod, silk mount, paper, roller */
+  .hang {
+    max-width: 1180px;
+    margin: 0 auto;
+    filter: drop-shadow(0 18px 22px rgba(60, 45, 25, 0.28));
+  }
+  .cord {
+    display: block;
+    width: 30%;
+    height: 24px;
+    margin: 0 auto -2px;
+  }
+  .rod {
+    height: 11px;
+    margin: 0 6px;
+    background: linear-gradient(#6b4a30, #2c1a0e);
+    border-radius: 2px;
+  }
+  /* the viewport as it is now (on phones 100vh is the large viewport): gl.ts sizes its drawing to
+   this box */
+  /* shown only while the 3D view is drawing (gl-on): a canvas without a working renderer never
+   covers the page */
+  canvas.gl {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    pointer-events: none;
+    z-index: 5;
+  }
+  &.gl-on canvas.gl {
+    display: block;
+  }
+  &.gl-on .rod,
+  &.gl-on .roller {
+    visibility: hidden;
+  }
+  /* until it is known whether the 3D roll or the CSS roller draws it, no roller (the rod shows) */
+  &.gl-wait .roller {
+    visibility: hidden;
+  }
+  .mount {
+    position: relative;
+    padding: 40px 34px 78px;
+    background-color: #b9ac8c;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9 .05' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .28 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .55 -.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='v'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.05 .9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .84 0 0 0 .5 -.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23v)'/%3E%3C/svg%3E"),
+      linear-gradient(
+        90deg,
+        rgba(50, 34, 12, 0.34),
+        transparent 7%,
+        rgba(255, 246, 222, 0.1) 50%,
+        transparent 93%,
+        rgba(50, 34, 12, 0.34)
+      );
+  }
+  .mount::before,
+  .mount::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 40px;
+    background: linear-gradient(90deg, #cfc19c, #e2d6b4 45%, #c8ba95);
+    box-shadow:
+      0 0 0 1px rgba(60, 42, 18, 0.35),
+      2px 0 5px rgba(40, 26, 8, 0.25);
+  }
+  .mount::before {
+    left: 27%;
+  }
+  .mount::after {
+    right: 27%;
+  }
+  .inner {
+    border: 9px solid #2b3540;
+    outline: 4px solid #d3c5a0;
+    box-shadow: 0 0 0 5px rgba(40, 26, 8, 0.28);
+  }
+  /* the UTD CS Webring, centred on the silk under the painting: previous, the ring's mark, next;
+   each a 44 px tap target. Out of the flow, so the mount keeps its size. */
+  .webring {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .webring a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--ink);
+    opacity: 0.8;
+  }
+  .webring a:hover,
+  .webring a:focus-visible {
+    opacity: 1;
+  }
+  .webring-arrow {
+    width: 20px;
+    height: 20px;
+  }
+  .webring-mark {
+    height: 26px;
+    width: auto;
+  }
+  .roller {
+    height: 30px;
+    margin: 0 -30px;
+    position: relative;
+    border-radius: 3px;
+    background: linear-gradient(#7a573a, #4a301c 38%, #231309 82%, #3a2415);
+  }
+  .roller::before,
+  .roller::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    width: 26px;
+    height: 40px;
+    border-radius: 4px;
+    background: linear-gradient(#2a211c, #0e0b09 60%, #241b16);
+  }
+  .roller::before {
+    left: -8px;
+  }
+  .roller::after {
+    right: -8px;
+  }
+
+  /* old paper: grain, foxing, darkened edges, the creases of a scroll that has been rolled for years */
+  .paper {
+    position: relative;
+    background-color: #d3be93;
+    overflow: hidden;
+    background-image:
+      radial-gradient(circle at 13% 22%, rgba(110, 66, 20, 0.3) 0 3px, transparent 7px),
+      radial-gradient(circle at 81% 9%, rgba(110, 66, 20, 0.24) 0 2px, transparent 6px),
+      radial-gradient(circle at 64% 58%, rgba(110, 66, 20, 0.22) 0 4px, transparent 9px),
+      radial-gradient(circle at 24% 83%, rgba(110, 66, 20, 0.26) 0 2.5px, transparent 7px),
+      radial-gradient(circle at 92% 71%, rgba(110, 66, 20, 0.2) 0 3px, transparent 8px),
+      radial-gradient(ellipse 70% 45% at 50% 32%, rgba(255, 242, 208, 0.34), transparent 72%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75 .9' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .22 0 0 0 0 .1 0 0 0 .5 -.17'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1400'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .009' numOctaves='4' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .27 0 0 0 0 .1 0 0 0 1.05 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2400' height='40'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .7' numOctaves='2' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 0 0 0 .26 -.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      linear-gradient(
+        90deg,
+        rgba(96, 62, 22, 0.34),
+        transparent 7%,
+        transparent 93%,
+        rgba(96, 62, 22, 0.34)
+      ),
+      linear-gradient(
+        rgba(96, 62, 22, 0.3),
+        transparent 4%,
+        transparent 96%,
+        rgba(96, 62, 22, 0.34)
+      ),
+      repeating-linear-gradient(
+        180deg,
+        transparent 0 372px,
+        rgba(70, 45, 15, 0.13) 372px 373px,
+        rgba(255, 245, 215, 0.16) 373px 375px,
+        transparent 375px 380px
+      );
+  }
+  .scene {
+    position: relative;
+    padding: 3% 5.5% 0;
+  }
+  .paint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .upper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5%;
+    align-items: start;
+    position: relative;
+    /* The approved mock-up's .upper (its inscription column) measures 657 px tall at 1366x768
+       and sets the distance between the peaks and the
+       Experience gate. Production scales the inscription down to fit the first screen, which pulled
+       the gate and its cloud row up into the foot of the mountains; keep the mock-up's height. */
+    min-height: 657px;
+  }
+  .peaks {
+    min-height: 540px;
+  }
+
+  /* the inscription: name, a few lines, the seal, as on a painting; it shrinks with --fit to fit the first screen */
+  .inscr h1 {
+    font-family: var(--hand);
+    font-weight: 400;
+    font-size: calc(clamp(54px, 7.3vw, 96px) * var(--fit, 1));
+    line-height: 0.98;
+    letter-spacing: 0;
+    margin-left: -0.04em;
+  }
+  .inscr .role {
+    color: var(--ink2-strong);
+    margin-top: calc(14px * var(--fit, 1));
+  }
+  .inscr .bio {
+    margin-top: calc(14px * var(--fit, 1));
+    font-size: max(14px, calc(19px * 1.06 * var(--fit, 1)));
+    line-height: calc(1.2 + 0.42 * var(--fit, 1));
+  }
+  .inscr .bio p + p {
+    margin-top: calc(0.4em * var(--fit, 1));
+  }
+  .inscr .stamps {
+    margin-top: calc(20px * var(--fit, 1));
+  }
+  .inscr .stamp {
+    min-height: max(44px, calc(50px * var(--fit, 1)));
+  }
+  .inscr .stamp i {
+    width: max(32px, calc(42px * var(--fit, 1)));
+    height: max(32px, calc(42px * var(--fit, 1)));
+  }
+  .inscr .seal {
+    display: block;
+    width: calc(66px * var(--fit, 1));
+    height: calc(66px * var(--fit, 1));
+    margin-top: calc(24px * var(--fit, 1));
+  }
+  /* headings that take focus from the menu are not controls: no outline box on them */
+  .inscr h1:focus,
+  #exp-t:focus,
+  #proj-t:focus,
+  #hack-t:focus,
+  #end-t:focus {
+    outline: none;
+  }
+
+  /* the hall: each bay holds one role, and the name board under the eave is the heading */
+  .hall {
+    position: relative;
+    margin-top: 358px;
+  }
+  .plaque {
+    position: absolute;
+    top: -66px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1;
+    padding: 6px 26px 8px;
+    border: 2.5px solid var(--ink);
+    background: #decda6;
+    white-space: nowrap;
+  }
+  .bays {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 196px;
+    padding: 0 44px;
+  }
+  .storey {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 44px;
+    width: 100%;
+  }
+  .storey[data-n='1'] {
+    width: 38%;
+  }
+  .storey[data-n='2'] {
+    width: 69%;
+  }
+  .pavilion .storey {
+    width: 100%;
+  }
+  .bay {
+    flex: 1;
+    min-width: 0;
+    padding: 30px 4px 34px;
+  }
+  .bay > time {
+    font-size: 15px;
+    color: var(--ink2);
+  }
+  .bay > h3 {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-top: 4px;
+  }
+  .bay > .org {
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .bay > p.what {
+    margin-top: 10px;
+    font-size: 16.5px;
+    line-height: 1.55;
+  }
+  .bay > .keys {
+    margin-top: 10px;
+    font-size: 14.5px;
+    color: var(--ink2);
+  }
+  .ground {
+    height: 236px;
+  }
+  /* the space under the experience hall, at the foot of the first band */
+  .gate-foot {
+    height: 120px;
+  }
+
+  /* every band of the scroll has its own painted layer */
+  .band {
+    position: relative;
+    display: flow-root;
+    padding-left: 5.5%;
+    padding-right: 5.5%;
+  }
+  .band > *:not(.paint) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* links are small seals, as a painter adds leisure seals beside the name seal */
+  .stamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    margin-top: 20px;
+  }
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 50px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 22px;
+  }
+  .stamp i {
+    width: 42px;
+    height: 42px;
+    display: block;
+    flex: none;
+    transition: transform 0.15s ease;
+  }
+  .stamp:hover i,
+  .stamp:focus-visible i {
+    transform: rotate(-7deg) scale(1.1);
+  }
+  .stamp span {
+    border-bottom: 1.5px solid transparent;
+  }
+  .stamp:hover span,
+  .stamp:focus-visible span {
+    border-bottom-color: var(--red-text);
+  }
+  .stamp:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+  }
+  .sec {
+    padding-top: 92px;
+    text-align: right;
+  }
+  .sec h2 {
+    font-weight: 400;
+    font-size: clamp(40px, 5.4vw, 60px);
+    line-height: 1;
+  }
+  .sec p {
+    color: var(--ink2);
+    margin-top: 6px;
+  }
+
+  /* projects: a village of houses */
+  .village {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
+    gap: 56px 46px;
+    margin: 26px 0 62px;
+  }
+  .house {
+    position: relative;
+    direction: ltr;
+    min-width: 0;
+    padding: 114px 30px 14px;
+    transition: transform 0.15s ease;
+  }
+  .bld {
+    position: absolute;
+    max-width: none;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  &.pre .mount {
+    clip-path: inset(0 0 calc(100% - 64px) 0);
+  }
+  .band > .flipc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .house.flipping .bld,
+  .house.flipping .hd,
+  .house.flipping .dt,
+  .house.flipping .winfig {
+    opacity: 0 !important;
+  }
+  .hd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 150px;
+    text-align: center;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .house canvas.motif {
+    display: block;
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 150/96;
+    margin-bottom: 6px;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .house b,
+  .house small {
+    align-self: stretch;
+  }
+  /* names shrink to fit their house (fitNames in layout/dom.ts), never break mid-word */
+  .house b,
+  .house small {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+  .house b {
+    display: block;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.1;
+  }
+
+  .house small {
+    display: block;
+    font-size: 15px;
+    color: var(--ink2);
+    margin-top: 5px;
+    line-height: 1.2;
+  }
+  .door {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 9px;
+    font-size: 16.5px;
+    line-height: 1;
+    color: var(--red-text);
+  }
+  .door i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    flex: none;
+    transition: transform 0.15s ease;
+  }
+  .house:not(.open):hover,
+  .house:not(.open):focus-within {
+    transform: translateY(-3px);
+  }
+  .hd:hover .door i,
+  .hd:focus-visible .door i,
+  .sb:hover .door i,
+  .sb:focus-visible .door i {
+    transform: rotate(-7deg) scale(1.12);
+  }
+  .hd:hover .door span,
+  .hd:focus-visible .door span,
+  .sb:hover .door span,
+  .sb:focus-visible .door span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .hd:focus-visible,
+  .sb:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 4px;
+  }
+
+  /* the open house: a hall across the whole row, with the project inside it */
+  .house.open {
+    grid-column: 1/-1;
+    padding: 198px 58px 24px;
+    display: grid;
+    /* minmax(0, …): a title too long for its column overflows (and fitNames shrinks it) rather
+     than widening the column */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    column-gap: 44px;
+    row-gap: 4px;
+    align-items: start;
+  }
+  .house.open .hd {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 18px;
+    align-items: center;
+    text-align: left;
+    min-height: 0;
+  }
+  .house.open .hd canvas {
+    grid-column: 1;
+    grid-row: 1/4;
+    width: 132px;
+    margin: 0;
+  }
+  .house.open .hd b,
+  .house.open .hd small,
+  .house.open .hd .door {
+    grid-column: 2;
+    justify-self: start;
+  }
+  /* no wider than their column, so a name too long for it overflows and fitNames can see it */
+  .house.open .hd b,
+  .house.open .hd small {
+    max-width: 100%;
+  }
+  .house.open .hd b {
+    font-size: 36px;
+    color: var(--red-text);
+  }
+  .house.open .hd small {
+    font-size: 17px;
+  }
+  .house.open .detail {
+    display: contents;
+  }
+  .house.open .dt {
+    grid-column: 1;
+  }
+  .house.open .winfig {
+    grid-column: 2;
+    grid-row: 1/3;
+    align-self: center;
+  }
+  .dt p {
+    margin-top: 8px;
+  }
+  .dt .keys {
+    color: var(--ink2);
+    font-size: 17px;
+  }
+  .dt .stamps {
+    margin-top: 12px;
+  }
+
+  /* hackathon stops open a note */
+  .sb {
+    display: block;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: inherit;
+    line-height: inherit;
+    transition: transform 0.15s ease;
+  }
+  .sb:hover,
+  .sb:focus-visible {
+    transform: translateY(-2px);
+  }
+  .stop .door {
+    display: flex;
+    margin-top: 6px;
+    font-size: 15.5px;
+  }
+  .stop .door i {
+    width: 21px;
+    height: 21px;
+  }
+  .band > .pop {
+    position: absolute;
+    z-index: 5;
+    text-align: left;
+    filter: drop-shadow(0 10px 13px rgba(40, 26, 8, 0.4));
+  }
+  .p-rod {
+    position: relative;
+    height: 9px;
+    margin: 0 -8px;
+    border-radius: 2px;
+    background: linear-gradient(#6b4a30, #2c1a0e);
+  }
+  .p-roll {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.75s cubic-bezier(0.3, 0.75, 0.25, 1);
+  }
+  .pop.on .p-roll {
+    grid-template-rows: 1fr;
+  }
+  .p-in {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .p-silk {
+    padding: 11px 9px 15px;
+    background-color: #b9ac8c;
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.07) 0 1px,
+        rgba(60, 42, 18, 0.06) 1px 3px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.05) 0 1px,
+        rgba(60, 42, 18, 0.05) 1px 3px
+      );
+  }
+  .p-paper {
+    border: 3px solid #2b3540;
+    outline: 2px solid #d3c5a0;
+    padding: 14px 18px 15px;
+  }
+  .p-roller {
+    position: relative;
+    height: 15px;
+    margin: 0 -14px;
+    border-radius: 7px;
+    background: linear-gradient(#f6e4b6, #cfae72 42%, #8d6c3c 85%, #6e5230);
+  }
+  .p-roller::before,
+  .p-roller::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    width: 11px;
+    height: 13px;
+    border-radius: 2px;
+    background: linear-gradient(#5e3d24, #24140a);
+  }
+  .p-roller::before {
+    left: -7px;
+  }
+  .p-roller::after {
+    right: -7px;
+  }
+  .pop h3 {
+    font-weight: 400;
+    font-size: 29px;
+    line-height: 1.1;
+  }
+  .pop .meta {
+    color: var(--ink2);
+    font-size: 16.5px;
+    margin-top: 2px;
+  }
+  .pop p {
+    margin-top: 8px;
+  }
+  .pop .res {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--red-text);
+  }
+  .pop .stamps {
+    margin-top: 10px;
+  }
+  .pop .stamp {
+    font-size: 20px;
+    min-height: 44px;
+  }
+  .pop .stamp i {
+    width: 36px;
+    height: 36px;
+  }
+  .pop .x {
+    /* a 44 px tap target that grows upward, so the text and its underline stay where they were */
+    display: inline-flex;
+    align-items: flex-end;
+    min-height: 44px;
+    font: inherit;
+    font-size: 16.5px;
+    color: var(--ink2);
+    background: none;
+    border: 0;
+    border-bottom: 1.5px solid currentColor;
+    padding: 0 0 1px;
+    margin-top: -7px;
+    cursor: pointer;
+  }
+  .pop:focus-visible,
+  .pop .x:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+  }
+  /* a stilled painting (also how a visitor who asks for reduced motion starts) unrolls its notes at
+   once, and its houses, doors and stops do not ease */
+  &.calm .p-roll,
+  &.calm .house,
+  &.calm .door i,
+  &.calm .sb {
+    transition: none;
+  }
+
+  /* the capture window */
+  .winfig {
+    margin: 34px 26px 4px;
+  }
+  .win {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 2.5px solid var(--ink);
+    background: none;
+    line-height: 0;
+  }
+  a.win:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+  }
+  .win img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .win.blank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16/9;
+  }
+  .win.blank canvas.motif.big {
+    display: block;
+    width: auto;
+    height: 60%;
+    max-width: 90%;
+    margin: 0;
+    aspect-ratio: 150/96;
+    mix-blend-mode: multiply;
+  }
+
+  /* hackathons: stops along a path */
+  .road {
+    position: relative;
+    height: 660px;
+    margin-top: 30px;
+  }
+  .stop {
+    position: absolute;
+    width: 210px;
+    padding: 4px 6px;
+    text-align: center;
+    line-height: 1.18;
+  }
+  .stop .yr,
+  .stop .ev {
+    display: block;
+    font-size: 15.5px;
+    color: var(--ink2);
+  }
+  .stop b {
+    display: block;
+    font-weight: 400;
+    font-size: 21px;
+    margin: 1px 0;
+  }
+  .stop .res {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--red-text);
+    font-size: 17px;
+    margin-top: 5px;
+    text-align: left;
+  }
+  .award {
+    width: 32px;
+    height: 32px;
+    display: block;
+    flex: none;
+  }
+
+  /* the closing pavilion */
+  .pavilion {
+    max-width: 600px;
+    margin-top: 332px;
+  }
+  .pavilion .bay {
+    padding: 30px 8px 34px;
+  }
+  .pavilion .bay > h2 {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.08;
+  }
+  /* a 44 px tap target, its text centred where it was (the margins take back what it grew) */
+  .mail {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: 12px 0 -2px;
+    font-size: 26px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .foot {
+    display: flex;
+    align-items: flex-end;
+    gap: 22px;
+    margin-top: 22px;
+  }
+  .foot .seal {
+    display: block;
+    width: 84px;
+    height: 84px;
+  }
+  .theme-btn {
+    font: inherit;
+    font-size: 18px;
+    background: none;
+    border: 0;
+    border-bottom: 1.5px solid var(--ink2);
+    color: var(--ink);
+    padding: 10px 0 2px;
+    min-height: 44px;
+    cursor: pointer;
+  }
+  /* seals press onto the paper */
+  .wait {
+    opacity: 0;
+  }
+  .press {
+    animation: scroll-press 0.46s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  }
+
+  /* stilled: seals are simply there */
+  &.calm .press {
+    animation: none;
+  }
+
+  /* quick menu */
+  .tag {
+    position: fixed;
+    top: 0;
+    left: clamp(16px, 3.4vw, 46px);
+    z-index: 6;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .tag.on {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  /* the shell's theme picker is a DOM descendant of .tag */
+  .tag dialog {
+    pointer-events: auto;
+  }
+  .tg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: 50% 0;
+    transform: rotate(calc((var(--gust, 0.3) - 0.3) * 6deg));
+  }
+  .tg:nth-child(2) {
+    transform: rotate(calc((var(--gust, 0.3) - 0.3) * -5deg));
+  }
+  .tg:nth-child(3) {
+    transform: rotate(calc((var(--gust, 0.3) - 0.3) * 8deg));
+  }
+  .tg::before {
+    content: '';
+    width: 2px;
+    height: 30px;
+    background: #4a3a26;
+  }
+  .tg:nth-child(2)::before {
+    height: 20px;
+  }
+  .tg:nth-child(3)::before {
+    height: 38px;
+  }
+  .tg > button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font: inherit;
+    font-size: 20px;
+    line-height: 1.1;
+    color: var(--ink);
+    background: linear-gradient(#eadcb8, #e2d1a6);
+    border: 1.5px solid var(--ink);
+    padding: 17px 13px 10px 15px;
+    min-width: 54px;
+    min-height: 46px;
+    cursor: pointer;
+    box-shadow: 0 5px 9px rgba(40, 26, 8, 0.3);
+  }
+  .tg > button::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    width: 7px;
+    height: 7px;
+    margin-left: -3.5px;
+    border-radius: 50%;
+    background: #4a3a26;
+  }
+  .tag-menu::after {
+    content: '';
+    /* as in the mock-up, whose border-box reset did not reach pseudo-elements: 9px with the border */
+    box-sizing: content-box;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: translateY(-2px) rotate(45deg);
+    margin-left: 4px;
+    transition: transform 0.15s ease;
+  }
+  .tag-menu[aria-expanded='true']::after {
+    transform: translateY(2px) rotate(-135deg);
+  }
+  .tg > button:hover {
+    background: #efe2c0;
+  }
+  .tg > button:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+  }
+  .tag-art i {
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex: none;
+  }
+  .tag-art .wd {
+    margin-right: 2px;
+  }
+  .slip li [aria-current='true']::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--red);
+    margin-left: auto;
+    filter: url(#rough);
+  }
+  .slip {
+    position: fixed;
+    z-index: 7;
+    top: 88px;
+    left: clamp(16px, 3.4vw, 46px);
+    width: 300px;
+    max-height: min(600px, calc(100vh - 108px));
+    display: flex;
+    flex-direction: column;
+    background: #e6d6ae;
+    border: 2px solid var(--ink);
+    box-shadow: 0 10px 24px rgba(40, 26, 8, 0.35);
+  }
+  .slip[hidden] {
+    display: none;
+  }
+  .slip input {
+    font: inherit;
+    color: inherit;
+    background: rgba(255, 250, 232, 0.55);
+    border: 0;
+    border-bottom: 2px solid var(--ink);
+    padding: 9px 14px;
+    width: 100%;
+    border-radius: 0;
+  }
+  .slip input::placeholder {
+    color: #6a5f50;
+  }
+  .slip input:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: -2px;
+  }
+  .slip ul {
+    list-style: none;
+    padding: 4px 0 8px;
+    overflow: auto;
+    flex: 1;
+  }
+  .slip li.g {
+    font-size: 14.5px;
+    color: var(--ink2);
+    padding: 8px 14px 0;
+  }
+  .slip li button,
+  .slip li a {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 36px;
+    padding: 2px 14px;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .slip li button:hover,
+  .slip li a:hover,
+  .slip li button:focus-visible,
+  .slip li a:focus-visible {
+    background: rgba(168, 50, 31, 0.14);
+    outline: 0;
+  }
+  /* the keyboard's place also gets an outline, inside the slip's border */
+  .slip li button:focus-visible,
+  .slip li a:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: -2px;
+  }
+  .slip:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: -4px;
+  }
+  .slip li i {
+    width: 22px;
+    height: 22px;
+    display: block;
+    flex: none;
+  }
+  .slip .none {
+    padding: 12px 14px;
+    color: var(--ink2);
+  }
+
+  @media (max-width: 1260px) {
+    .roller {
+      margin: 0 -6px;
+    }
+    .roller::before,
+    .roller::after {
+      width: 10px;
+    }
+    .roller::before {
+      left: -3px;
+    }
+    .roller::after {
+      right: -3px;
+    }
+  }
+}
+
+/* the open hall's two columns leave its name too little room here: one column, as on a phone */
+@media (max-width: 980px) {
+  .scroll-theme {
+    .house.open {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .house.open .winfig {
+      grid-column: 1;
+      grid-row: auto;
+      margin: 40px 20px 2px;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .scroll-theme {
+    font-size: 17px;
+    padding: 18px 10px 40px;
+
+    .cord {
+      height: 16px;
+      width: 44%;
+    }
+    .mount {
+      padding: 26px 14px 54px;
+    }
+    .webring {
+      bottom: 5px;
+    }
+    .mount::before,
+    .mount::after {
+      height: 26px;
+      width: 14px;
+    }
+    .inner {
+      border-width: 5px;
+      outline-width: 2px;
+    }
+    .roller {
+      height: 22px;
+      margin: 0 -6px;
+    }
+    .roller::before,
+    .roller::after {
+      height: 30px;
+      width: 10px;
+      top: -4px;
+    }
+    .roller::before {
+      left: -3px;
+    }
+    .roller::after {
+      right: -3px;
+    }
+    .scene {
+      padding: 26px 16px 0;
+    }
+    .upper {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .inscr {
+      order: -1;
+    }
+    .peaks {
+      min-height: 330px;
+    }
+    .inscr .bio {
+      font-size: max(14px, calc(17px * var(--fit, 1)));
+    }
+    .hall {
+      margin-top: 244px;
+    }
+    .plaque {
+      top: -52px;
+      font-size: 28px;
+    }
+    .bays {
+      gap: 84px;
+      padding: 0 34px;
+      align-items: stretch;
+    }
+    .storey {
+      display: contents;
+    }
+    .bay {
+      padding: 14px 2px 6px;
+    }
+    .sec {
+      padding-top: 78px;
+    }
+    .village {
+      grid-template-columns: 1fr 1fr;
+      gap: 34px 22px;
+      margin-bottom: 48px;
+    }
+    .house {
+      padding: 94px 24px 10px;
+    }
+    .hd {
+      min-height: 122px;
+    }
+    .house canvas.motif {
+      margin-bottom: 10px;
+    }
+    .house b {
+      font-size: 19px;
+    }
+    .house small {
+      font-size: 14px;
+    }
+    .house.open {
+      padding: 138px 30px 16px;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 2px;
+    }
+    .house.open .hd canvas {
+      width: 96px;
+    }
+    .house.open .hd b {
+      font-size: 28px;
+    }
+    .house.open .winfig {
+      grid-column: 1;
+      grid-row: auto;
+      margin: 40px 20px 2px;
+    }
+    .winfig {
+      margin: 40px 22px 2px;
+    }
+    .tag {
+      left: 8px;
+      gap: 7px;
+    }
+    .tg::before {
+      height: 14px;
+    }
+    .tg:nth-child(2)::before {
+      height: 9px;
+    }
+    .tg:nth-child(3)::before {
+      height: 19px;
+    }
+    .tg > button {
+      font-size: 16.5px;
+      padding: 15px 9px 8px 10px;
+      min-height: 44px;
+      gap: 5px;
+    }
+    .tag-art .wd {
+      display: none;
+    }
+    .tag-art i {
+      width: 23px;
+      height: 23px;
+    }
+    .slip {
+      left: 0;
+      right: 0;
+      top: auto;
+      bottom: 0;
+      width: auto;
+      max-height: 72vh;
+      border-width: 2px 0 0;
+      border-radius: 14px 14px 0 0;
+    }
+    .slip ul {
+      padding-bottom: 72px;
+    }
+    /* on the phone sheet every item is a full tap target */
+    .slip li button,
+    .slip li a {
+      min-height: 44px;
+    }
+    .road {
+      height: 1540px;
+    }
+    .stop {
+      width: auto;
+      text-align: left;
+    }
+    .pavilion {
+      margin-top: 264px;
+    }
+    .pavilion .bay > h2 {
+      font-size: 29px;
+    }
+    .mail {
+      font-size: 21px;
+      margin: 8px 0 -6px;
+    }
+    .stamp {
+      font-size: 20px;
+    }
+    .ground {
+      height: 200px;
+    }
+  }
+}
